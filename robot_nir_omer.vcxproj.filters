@@ -13,17 +13,29 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Localization">
-      <UniqueIdentifier>{643901c2-9e49-44a5-b7f5-8a28b2759979}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Localization">
-      <UniqueIdentifier>{46e76b0d-b899-48da-aa44-61ecdd4dd03e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\libs">
       <UniqueIdentifier>{55348a43-91a4-4e08-9042-b24d58f82358}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\libs">
       <UniqueIdentifier>{a853dd00-9f28-4f47-9809-1c44f43dca8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{adbe6a03-8d3e-4341-b4bf-4a46e24d8557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{08962e53-a2d6-4a99-b4fe-415c3ca58a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{38338def-d5ab-4f13-abae-717c1d91de6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers\Localization">
+      <UniqueIdentifier>{46e76b0d-b899-48da-aa44-61ecdd4dd03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{0ed414fd-07cd-4286-ac1e-52e76808929c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers\Localization">
+      <UniqueIdentifier>{643901c2-9e49-44a5-b7f5-8a28b2759979}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,9 +44,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConfigurationManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,10 +54,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LocalizationManager.h">
-      <Filter>Header Files\Localization</Filter>
+      <Filter>Header Files\Managers\Localization</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>Header Files\Localization</Filter>
+      <Filter>Header Files\Managers\Localization</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files\libs</Filter>
@@ -62,18 +71,21 @@
     <ClInclude Include="lodepng.h">
       <Filter>Header Files\libs</Filter>
     </ClInclude>
-    <ClInclude Include="WaypointsManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Robot.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="WaypointsManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigurationManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConfigurationManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
@@ -86,10 +98,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LocalizationManager.cpp">
-      <Filter>Source Files\Localization</Filter>
+      <Filter>Source Files\Managers\Localization</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>Source Files\Localization</Filter>
+      <Filter>Source Files\Managers\Localization</Filter>
     </ClCompile>
     <ClCompile Include="lodepng.cpp">
       <Filter>Source Files\libs</Filter>
@@ -106,9 +118,15 @@
     <ClCompile Include="Robot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConfigurationManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="README.md">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
