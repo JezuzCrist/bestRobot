@@ -110,9 +110,6 @@
     <ClCompile Include="WaypointsManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="robot_nir_omer.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include=".gitignore" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
