@@ -103,13 +103,11 @@ void PathPlanner::setOpen(list<Cell*> openList, Cell *cellToOpen)
 	openList.push_back(cellToOpen);
 }
 
-
-
-vector<Position*> PathPlanner::pathPlanner(int x1, int y1, int x2, int y2)
+vector<Position*> PathPlanner::getPath(int sourceX, int sourceY, int destX, int destY)
 {
     // Define cells to work with
-	Cell *start = getCellFromMap(x1, y1);
-    Cell *end = getCellFromMap(x2, y2);
+	Cell *start = getCellFromMap(sourceX, sourceY);
+    Cell *end = getCellFromMap(destX, destY);
 	start->g = 0;
 	start->f = start->getHScore(end);
     Cell *current = start;
