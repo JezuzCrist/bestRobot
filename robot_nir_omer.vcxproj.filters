@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Localization">
+      <UniqueIdentifier>{643901c2-9e49-44a5-b7f5-8a28b2759979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Localization">
+      <UniqueIdentifier>{46e76b0d-b899-48da-aa44-61ecdd4dd03e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs">
+      <UniqueIdentifier>{55348a43-91a4-4e08-9042-b24d58f82358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libs">
+      <UniqueIdentifier>{a853dd00-9f28-4f47-9809-1c44f43dca8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -21,12 +33,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ConfigurationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -39,10 +45,25 @@
     <ClInclude Include="PathPlanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lodepng.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="LocalizationManager.h">
+      <Filter>Header Files\Localization</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Localization</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\libs</Filter>
     </ClInclude>
     <ClInclude Include="pngUtil.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="lodepng.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="WaypointsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Robot.h">
@@ -50,9 +71,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -68,10 +86,22 @@
     <ClCompile Include="PathPlanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LocalizationManager.cpp">
+      <Filter>Source Files\Localization</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Localization</Filter>
+    </ClCompile>
     <ClCompile Include="lodepng.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libs</Filter>
     </ClCompile>
     <ClCompile Include="pngUtil.cpp">
+      <Filter>Source Files\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="WaypointsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Robot.cpp">
