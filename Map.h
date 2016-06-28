@@ -21,6 +21,7 @@ class Map
 public:
 	Map(string& mapImageFilePath);
 	~Map();
+	void Map::loadFromFile(string& mapImageFilePath);
 	bool Map::inBound(int x, int y);
 	int Map::min(int num, int num1);
 	int getWidth();

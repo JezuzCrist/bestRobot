@@ -37,10 +37,45 @@ Map::Map(string& mapImageFilePath)
 
 Map::~Map()
 {
-	for(int i = 0; i < getHeight(); ++i) {
-			delete [] map[i];
+	for(int i = 0; i < getHeight(); ++i) 
+	{
+		delete [] map[i];
+	}
+	delete [] map;
+}
+
+void Map::loadFromFile(string& mapImageFilePath)
+{
+	lodepng::decode(this->image, this->width, 
+					this->height, mapImageFilePath);
+	this->map = new Cell**[height];
+	for(int i = 0; i < (int)height; i++)
+		this->map[i] = new Cell*[width];
+
+	int red, green, blue;
+	float alpha;
+
+	for (int i = 0; i < (int)height; i++)
+	{
+		for (int j = 0; j < (int)width; j++)
+		{
+			red = this->image[i * width * 4 + j * 4];
+			green = this->image[i * width * 4 + j * 4 + 1];
+			blue = this->image[i * width * 4 + j * 4 + 2];
+			alpha = this->image[i * width * 4 + j * 4 + 3];
+			Color *color = new Color(red, green, blue, alpha);
+			bool is_walkable;
+			if (red == 255 && green == 255 && blue == 255)
+			{
+				is_walkable = true;
+			}
+			else
+			{
+				is_walkable = false;
+			}
+			this->map[i][j] = new Cell(i, j, is_walkable, color);
 		}
-		delete [] map;
+	}
 }
 
 bool Map::inBound(int x, int y)
