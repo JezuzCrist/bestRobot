@@ -1,0 +1,12 @@
+#include "stdafx.h"
+#include "Cell.h"
+
+
+Cell::Cell(void)
+{
+}
+
+
+Cell::~Cell(void)
+{
+}

@@ -80,13 +80,21 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Desktop\src\lodepng.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\src\pngUtil.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="ConfigurationManager.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Desktop\src\lodepng.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\src\pngUtil.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="ConfigurationManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
