@@ -1,9 +1,9 @@
 Debug/
 ReadMe.txt
-robot_nir_omer.opensdf
-robot_nir_omer.sln
+*.opensdf
+*.sln
 *.suo
-robot_nir_omer.sdf
+*.sdf
 *.ipch
 
 # Compiled Object files
