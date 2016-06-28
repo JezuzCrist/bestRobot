@@ -8,12 +8,11 @@ class PathPlanner
 public:
 	PathPlanner(Map* worldMap);
 
-	vector<Position*> getPath(int x1, int y1, int x2, int y2);
+	vector<Position*> getPath(int sourceX, int sourceY, int destX, int destY);
 
 private:
 	Map* _map;
 
-	bool isEqual(Cell *a, Cell *b);
 	Cell* getCellFromMap(int x, int y);
 	bool cellIsWalkable(Cell* Cell);
 	list<Cell*> PathPlanner::getNeighbors(Cell *current);

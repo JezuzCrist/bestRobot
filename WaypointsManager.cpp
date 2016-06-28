@@ -2,8 +2,6 @@
 #include "WaypointsManager.h"
 
 
-
-
 WaypointsManager::WaypointsManager(vector<Position*> robotPath)
 {
 	this->_robotPath = robotPath;
