@@ -4,6 +4,7 @@
 #include "Cell.h"
 
 using namespace std;
+
 class ImageSize {
 public:
 	unsigned int width;
@@ -18,15 +19,17 @@ public:
 class Map
 {
 public:
-	Map(void);
-	~Map(void);
+	Map(string& mapImageFilePath);
+	~Map();
+	bool Map::inBound(int x, int y);
+	int Map::min(int num, int num1);
+	int getWidth();
+	int getHeight();
+	int Map::checkIfObstacle(std::vector<unsigned char> image, ImageSize* imgSize, int x, int y, ImageSize* gridChunk);
 
-	Point*** map;
+	Cell*** map;
 
 private:
-	int width, height;
+	unsigned width, height;
 	vector<unsigned char> image;
 };
-
-
-
