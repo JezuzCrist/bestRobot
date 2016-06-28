@@ -2,7 +2,7 @@ Debug/
 ReadMe.txt
 robot_nir_omer.opensdf
 robot_nir_omer.sln
-robot_nir_omer.suo
+*.suo
 robot_nir_omer.sdf
 *.ipch
 
