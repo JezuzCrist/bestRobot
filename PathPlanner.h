@@ -6,7 +6,13 @@
 class PathPlanner
 {
 public:
-	PathPlanner(string& mapImageFilePath);
+	PathPlanner(Map* worldMap);
+
+	vector<Position*> getPath(int x1, int y1, int x2, int y2);
+
+private:
+	Map* _map;
+
 	bool isEqual(Cell *a, Cell *b);
 	Cell* getCellFromMap(int x, int y);
 	bool cellIsWalkable(Cell* Cell);
@@ -16,8 +22,5 @@ public:
 	void PathPlanner::resetOpenedCells(list<Cell*> openList);
 	void PathPlanner::setClose(list<Cell*> openList, Cell *CellToClose);
 	void PathPlanner::setOpen(list<Cell*> openList, Cell *CellToOpen);
-	vector<Position*> getPath(int x1, int y1, int x2, int y2);
-
-	Map* map;
 };
 

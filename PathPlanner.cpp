@@ -1,14 +1,14 @@
 #include "StdAfx.h"
 #include "PathPlanner.h"
 
-PathPlanner::PathPlanner(string& mapImageFilePath)
+PathPlanner::PathPlanner(Map* worldMap)
 {
-	map = new Map(mapImageFilePath);
+	this->_map = worldMap;
 }
 
 Cell* PathPlanner::getCellFromMap(int x, int y)
 {
-	return map->map[(int)x][(int)y];
+	return this->_map->map[(int)x][(int)y];
 }
 
 bool PathPlanner::cellIsWalkable(Cell *cell)
@@ -16,7 +16,7 @@ bool PathPlanner::cellIsWalkable(Cell *cell)
 	// obstacle case
 	for (int i = -1; i < 2; ++i)
 		for (int j = -1; j < 2; ++j)
-			if (map -> inBound(cell->getX() + i, cell->getY() + j) && 
+			if (this->_map -> inBound(cell->getX() + i, cell->getY() + j) && 
 				!getCellFromMap(cell->getX() + i, cell->getY() + j)-> walkable)
 				return false;
 	return true;
@@ -31,7 +31,7 @@ list<Cell*> PathPlanner::getNeighbors(Cell *current)
     {
         for (int y = -1; y < 2; y ++)
         {
-            if (!map->inBound(current->getX() + x, current->getY() + y))
+            if (!this->_map->inBound(current->getX() + x, current->getY() + y))
 				continue;
 
 			neighbor = getCellFromMap(current->getX() + x, current->getY() + y);
