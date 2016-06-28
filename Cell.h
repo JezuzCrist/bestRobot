@@ -2,18 +2,9 @@
 #include "stdlib.h"
 #include "math.h"
 #include "limits.h"
+#include "Position.h"
 using namespace std;
 
-struct Position {
-	int x;
-	int y;
-
-	Position(int x, int y)
-	{
-		this -> x = x;
-		this -> y = y;
-	}
-};
 
 class Color {
 public:

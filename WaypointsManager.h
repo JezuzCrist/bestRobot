@@ -1,5 +1,5 @@
 #pragma once
-#include "Cell.h"
+#include "Position.h"
 #include <vector>
 #include <math.h>
 
