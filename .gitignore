@@ -4,6 +4,7 @@ robot_nir_omer.opensdf
 robot_nir_omer.sln
 robot_nir_omer.suo
 robot_nir_omer.sdf
+*.ipch
 
 # Compiled Object files
 *.slo
