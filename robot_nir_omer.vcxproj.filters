@@ -62,6 +62,9 @@
     <ClInclude Include="lodepng.h">
       <Filter>Header Files\libs</Filter>
     </ClInclude>
+    <ClInclude Include="WaypointsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="WaypointsManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
