@@ -15,6 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="ReadMe.txt" />
     <Text Include="parameters.txt">
       <Filter>Resource Files</Filter>
     </Text>
@@ -44,6 +45,9 @@
     <ClInclude Include="pngUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -70,10 +74,13 @@
     <ClCompile Include="pngUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore">
-      <Filter>Source Files</Filter>
-    </None>
+    <ResourceCompile Include="robot_nir_omer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="parameters.txt" />
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
@@ -85,6 +86,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="PathPlanner.h" />
     <ClInclude Include="pngUtil.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -96,13 +98,14 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PathPlanner.cpp" />
     <ClCompile Include="pngUtil.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
+    <ResourceCompile Include="robot_nir_omer.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
