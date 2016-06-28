@@ -21,11 +21,14 @@ class Map
 public:
 	Map(string& mapImageFilePath);
 	~Map();
+	void Map::loadFromFile(string& mapImageFilePath);
 	bool Map::inBound(int x, int y);
 	int Map::min(int num, int num1);
 	int getWidth();
 	int getHeight();
-	int Map::checkIfObstacle(std::vector<unsigned char> image, ImageSize* imgSize, int x, int y, ImageSize* gridChunk);
+	int Map::checkIfObstacle(std::vector<unsigned char> image, 
+							 ImageSize* imgSize, int x, int y, 
+							 ImageSize* gridChunk);
 
 	Cell*** map;
 

@@ -13,13 +13,16 @@ MapPoint ConfigurationManager::getMapPointFromString(string mapPointString)
 	unsigned index = 0;
 	char spaceIndecator = ' ';
 	while (index < mapPointString.length() && 
-		mapPointString[index] != spaceIndecator) {
+		   mapPointString[index] != spaceIndecator) 
+	{
 		strX += mapPointString[index];
 		index++;
-	} index++;
+	} 
+	index++;
 	returnPoint.x = atoi(strX.c_str());
 	while (index < mapPointString.length() && 
-		mapPointString[index] != spaceIndecator) {
+		   mapPointString[index] != spaceIndecator) 
+	{
 		strY += mapPointString[index];
 		index++;
 	}
@@ -41,7 +44,7 @@ RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString)
 	index++;
 	returnRobotSize.width = atoi(strW.c_str());
 	while (index < robotSizeString.length() && 
-		robotSizeString[index] != spaceIndecator) {
+		   robotSizeString[index] != spaceIndecator) {
 		strH += robotSizeString[index];
 		index++;
 	}
