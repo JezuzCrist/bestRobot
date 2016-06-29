@@ -1,6 +1,10 @@
 #include "StdAfx.h"
 #include "Cell.h"
 
+Color::Color()
+{
+}
+
 Color::Color(int red, int green, int blue, float alpha)
 {
 	this -> red = red;
