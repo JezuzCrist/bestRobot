@@ -11,38 +11,50 @@ Color::Color(int red, int green, int blue, float alpha)
 
 bool Color::isWhite()
 {
-	if (red == 255 && green == 255 && blue == 255)
+	if (red == WHITE && green == WHITE && blue == WHITE)
 		return true;
 	return false;
 }
 
+void Color::setBlack()
+{
+	red = green = blue = BLACK;
+}
+
+void Color::setWhite()
+{
+	red = green = blue = WHITE;
+}
 
 Cell::Cell()
 {
 	this->parent = NULL;
     this->closed = false;
     this->opened = false;
+	this->walkable = false;
     x = y = f = g = h = INFINITY;
+	this -> color = new Color();
 }
 
-Cell::Cell(int x, int y, bool w)
+Cell::Cell(int x, int y, bool walkable)
 {
 	f = g = h = INFINITY;
 	this->parent = NULL;
     this->closed = false;
     this->opened = false;
-    this -> walkable = w;
+    this -> walkable = walkable;
     this -> x = x;
     this -> y = y;
+	this -> color = new Color();
 }
 
-Cell::Cell(int x, int y, bool w, Color *color)
+Cell::Cell(int x, int y, bool walkable, Color *color)
 {
 	f = g = h = INFINITY;
 	this->parent = NULL;
     this->closed = false;
     this->opened = false;
-    this -> walkable = w;
+    this -> walkable = walkable;
     this -> x = x;
     this -> y = y;
 	this -> color = color;

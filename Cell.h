@@ -22,17 +22,22 @@ public:
 	int blue;
 	float alpha;
 
+	Color();
 	Color(int red, int green, int blue, float alpha);
 	bool isWhite();
+	void setBlack();
+	void setWhite();
 	void init();
+
+	const int static BLACK = 0, WHITE = 255;
 };
 
 class Cell
 {
 public:
 	Cell();
-	Cell(int x, int y, bool w);
-	Cell(int x, int y, bool w, Color *color);
+	Cell(int x, int y, bool walkable);
+	Cell(int x, int y, bool walkable, Color *color);
 	Position* getPosition();
 	Cell* getParent();
 	void setParent(Cell *p);
