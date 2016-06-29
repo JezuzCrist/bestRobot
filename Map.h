@@ -28,8 +28,6 @@ public:
 	void Map::blowObstaclesInImage(vector<unsigned char> image);
 	bool Map::inBound(int x, int y);
 	int Map::min(int num, int num1);
-	int getWidth();
-	int getHeight();
 	bool Map::isObstacleFound(std::vector<unsigned char> image, 
 							  int imgRow, int imgCol, ImageSize* gridChunk);
 

@@ -14,7 +14,7 @@ Map::Map(string& mapImageFilePath, float mapResolution,
 
 Map::~Map()
 {
-	for(int i = 0; i < getHeight(); ++i) 
+	for(int i = 0; i < mapSize->height; ++i) 
 	{
 		delete [] map[i];
 	}
@@ -119,15 +119,6 @@ bool Map::inBound(int x, int y)
 	return inBound;
 }
 
-int Map::getWidth()
-{
-	return (int)width;
-}
-
-int Map::getHeight()
-{
-	return (int)height;
-}
 
 int Map::min(int num, int num1)
 {
