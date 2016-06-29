@@ -2,37 +2,14 @@
 #include "Map.h"
 
 
-Map::Map(string& mapImageFilePath)
+Map::Map(string& mapImageFilePath, float mapResolution, 
+         float gridResolution, RobotSize* robotSize)
 {
-	lodepng::decode(image, width, height, mapImageFilePath);
-	map = new Cell**[height];
-	for(int i = 0; i < (int)height; ++i)
-		map[i] = new Cell*[width];
-
-	int red, green, blue;
-	float alpha;
-
-	for (int i = 0; i < (int)height; i++)
-	{
-		for (int j = 0; j < (int)width; j++)
-		{
-			red = image[i * width * 4 + j * 4];
-			green = image[i * width * 4 + j * 4 + 1];
-			blue = image[i * width * 4 + j * 4 + 2];
-			alpha = image[i * width * 4 + j * 4 + 3];
-			Color *color = new Color(red, green, blue, alpha);
-			bool is_walkable;
-			if (red == 255 && green == 255 && blue == 255)
-			{
-				is_walkable = true;
-			}
-			else
-			{
-				is_walkable = false;
-			}
-			map[i][j] = new Cell(i, j, is_walkable, color);
-		}
-	}
+	this->mapResolution = mapResolution;
+	this->robotSize = robotSize;
+	this->gridResolution = gridResolution;
+	
+	loadFromFile(mapImageFilePath);
 }
 
 Map::~Map()
@@ -46,42 +23,99 @@ Map::~Map()
 
 void Map::loadFromFile(string& mapImageFilePath)
 {
-	lodepng::decode(this->image, this->width, 
-					this->height, mapImageFilePath);
-	this->map = new Cell**[height];
-	for(int i = 0; i < (int)height; i++)
-		this->map[i] = new Cell*[width];
+	// Read image and save image size to member;
+	unsigned height, width;
+	lodepng::decode(this->image, width, height, mapImageFilePath);
+	this->imgSize = new ImageSize(width, height);
+	
+	// Calc and save the grid size to member;
+	int gridHeight = (int)(this->height * 
+						   this->mapResolution / this->gridResolution);
+	int gridWidth = (int)(this->width * 
+						  this->mapResolution / this->gridResolution);
+	this->mapSize = new ImageSize(gridWidth, gridHeight);
 
-	int red, green, blue;
-	float alpha;
+	blowObstaclesInImage(this->image);
+	readImageToGrid();
+}
 
-	for (int i = 0; i < (int)height; i++)
+void Map::readImageToGrid()
+{
+	bool isWalkable;
+	int mapRow, mapCol, color;
+	int resolutionRelation = (int)(this->gridResolution / this->mapResolution);
+
+	// Define grid 2D array.
+	this->map = new Cell**[mapSize->height];
+	for(int i = 0; i < mapSize->height; i++)
+		this->map[i] = new Cell*[mapSize->width];
+
+	// Initialize grid 2D array.
+	int imgRow = 0, imgCol = 0;
+	for (imgRow = 0; imgRow < imgSize->height; imgRow += resolutionRelation)
 	{
-		for (int j = 0; j < (int)width; j++)
+		for (imgCol = 0; imgCol < imgSize->width; imgCol += resolutionRelation)
 		{
-			red = this->image[i * width * 4 + j * 4];
-			green = this->image[i * width * 4 + j * 4 + 1];
-			blue = this->image[i * width * 4 + j * 4 + 2];
-			alpha = this->image[i * width * 4 + j * 4 + 3];
-			Color *color = new Color(red, green, blue, alpha);
-			bool is_walkable;
-			if (red == 255 && green == 255 && blue == 255)
-			{
-				is_walkable = true;
-			}
-			else
-			{
-				is_walkable = false;
-			}
-			this->map[i][j] = new Cell(i, j, is_walkable, color);
+			mapRow = imgRow / resolutionRelation;
+			mapCol = imgCol / resolutionRelation;
+			color = this->image[imgRow * this->width * 4 + imgCol * 4];
+			isWalkable = (color == Color::WHITE) ? true: false;
+			this->map[mapRow][mapCol] = new Cell(mapRow, mapCol, isWalkable);
 		}
 	}
 }
 
+// Blow obstacles accroding to robot size.
+void Map::blowObstaclesInImage(vector<unsigned char> image)
+{
+	bool isBlack;
+	unsigned int color;
+	ImageSize* radiusToSearchObstacle = new ImageSize(
+						(int)(robotSize->width / 2.0 / this->mapResolution), 
+						(int)(robotSize->height / 2.0 / this->mapResolution));
+
+	for (int imgRow = 0; imgRow < imgSize->height; imgRow++)
+	{
+		for (int imgCol = 0; imgCol < imgSize->width; imgCol++)
+		{
+			isBlack = isObstacleFound(image, imgRow, imgCol, 
+									  radiusToSearchObstacle);
+			color = (isBlack == true) ? Color::BLACK : Color::WHITE;
+			image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
+			image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = color;
+			image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = color;
+			image[imgRow * imgSize->width * 4 + imgCol * 4 + 3] = 255;
+		}
+	}
+}
+
+bool Map::isObstacleFound(std::vector<unsigned char> image, int imgRow, 
+						  int imgCol, ImageSize* radiusToSearchObstacle)
+{
+	int verticalRadius = min(imgRow + radiusToSearchObstacle->height, 
+							 imgSize->height);
+	int horizontalRadius = min(imgCol + radiusToSearchObstacle->width, 
+							   imgSize->width);
+	for (int i = imgRow; i < verticalRadius; i++)
+	{
+		for (int j = imgCol; j < horizontalRadius; j++)
+		{
+			if (image[i * imgSize->width * 4 + j * 4 + 0] != Color::WHITE ||
+				image[i * imgSize->width * 4 + j * 4 + 1] != Color::WHITE ||
+				image[i * imgSize->width * 4 + j * 4 + 2] != Color::WHITE)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 bool Map::inBound(int x, int y)
 {
-	bool inBound = (x > -1 &&  x < this-> getHeight()  && 
-					y > -1 && y < this-> getWidth());
+	bool inBound = (x > -1 &&  x < this-> mapSize->height && 
+					y > -1 && y < this->  mapSize->width);
 	return inBound;
 }
 
@@ -93,23 +127,6 @@ int Map::getWidth()
 int Map::getHeight()
 {
 	return (int)height;
-}
-
-int Map::checkIfObstacle(std::vector<unsigned char> image, ImageSize* imgSize, int x, int y, ImageSize* gridChunk)
-{
-	for (int i = x; i < min(x + gridChunk->height, imgSize->height); i++)
-	{
-		for (int j = y; j < min(y + gridChunk->width, imgSize->width); j++)
-		{
-			if (image[i * imgSize->width * 4 + j * 4 + 0] != 255 ||
-				image[i * imgSize->width * 4 + j * 4 + 1] != 255 ||
-				image[i * imgSize->width * 4 + j * 4 + 2] != 255)
-			{
-				return 0;
-			}
-		}
-	}
-	return 255;
 }
 
 int Map::min(int num, int num1)
