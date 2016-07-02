@@ -3,7 +3,6 @@
 
 ConfigurationManager::ConfigurationManager(void)
 {
-	
 }
 
 MapPoint ConfigurationManager::getMapPointFromString(string mapPointString) 
@@ -29,6 +28,7 @@ MapPoint ConfigurationManager::getMapPointFromString(string mapPointString)
 	returnPoint.y = atoi(strY.c_str());
 	return returnPoint;
 }
+
 RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString) 
 {
 	RobotSize returnRobotSize;
@@ -51,6 +51,7 @@ RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString)
 	returnRobotSize.height = atoi(strH.c_str());
 	return returnRobotSize;
 }
+
 RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosString) 
 {
 	RobotPosition returnRobotPosition;
@@ -65,7 +66,8 @@ RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosSt
 	for(;index < robotPosString.length() && 
 		robotPosString[index] != spaceIndecator; index++){
 		mapPointStr += robotPosString[index];
-	} index++;
+	} 
+	index++;
 	for(;index < robotPosString.length() && 
 		robotPosString[index] != spaceIndecator; index++){
 		angleStr += robotPosString[index];
@@ -121,7 +123,6 @@ void ConfigurationManager::parse(string fileLocation)
 	this-> mapFileLocation = mapLocation;
 	this-> size = getRobotSizeFromString(robotSize);
 }
-
 
 ConfigurationManager::~ConfigurationManager(void)
 {

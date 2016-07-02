@@ -50,18 +50,7 @@ Cell::Cell(int x, int y, bool walkable)
     this -> x = x;
     this -> y = y;
 	this -> color = new Color();
-}
-
-Cell::Cell(int x, int y, bool walkable, Color *color)
-{
-	f = g = h = INFINITY;
-	this->parent = NULL;
-    this->closed = false;
-    this->opened = false;
-    this -> walkable = walkable;
-    this -> x = x;
-    this -> y = y;
-	this -> color = color;
+	(this -> walkable == true) ? color->setWhite() : color->setBlack();
 }
 
 Position* Cell::getPosition()
