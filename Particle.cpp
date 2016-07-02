@@ -2,7 +2,15 @@
 #include "Particle.h"
 
 
-Particle::Particle(void)
+Particle::Particle()
+{
+}
+
+Particle::Particle(double deltaX, double deltaY, double deltaTeta)
+{
+}
+
+void Particle::move(double deltaX, double deltaY, double deltaTeta)
 {
 }
 
