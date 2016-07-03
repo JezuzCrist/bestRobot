@@ -1,11 +1,10 @@
 #pragma once
 #include "Particle.h"
 #include "Position.h"
-#include <list>
-#include <ctime>
+
 using namespace std;
 
-#define STARTING_PARTICLE_COUNT 50
+#define PARTICLE_COUNT 50
 #define PARTICLE_SPREAD 10
 
 class LocalizationManager
@@ -18,7 +17,7 @@ public:
 
 
 private:
-	list<Particle> _particles;
+	Particle* _particles[PARTICLE_COUNT];
 	Particle _bestEstimatedPartical;
 	void _init();
 };

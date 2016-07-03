@@ -2,10 +2,6 @@
 #include "LocalizationManager.h"
 
 
-void _initRandom(){
-	srand(time(NULL));
-}
-
 LocalizationManager::LocalizationManager(void)
 {
 	this->_init();
@@ -13,17 +9,15 @@ LocalizationManager::LocalizationManager(void)
 
 void LocalizationManager::_init()
 {
-	for (int i = 0; i < STARTING_PARTICLE_COUNT; i++)
+	double startingLocationX = 0, startingLocationY = 0,startingYaw = 0, ANGLES_NUM = 360;
+	Particle* startingLocation = new Particle(startingLocationX,startingLocationY,startingYaw);
+
+	for (int i = 0; i < PARTICLE_COUNT; i++)
 	{
-		_initRandom();
-
-		double particleX =  (rand() % PARTICLE_SPREAD) / PARTICLE_SPREAD;
-		double particleY = (rand() % PARTICLE_SPREAD) / PARTICLE_SPREAD;
-		double particleYaw = (rand() % PARTICLE_SPREAD) / PARTICLE_SPREAD;
-
-		Particle newParticle;
-		newParticle.move(particleX,particleY,particleYaw);
-		_particles.push_back(newParticle);
+		for (int newParticalIndex = 0; i < PARTICLE_COUNT; newParticalIndex++)
+		{
+			this->_particles[i] = new Particle(startingLocation);
+		}
 	}
 }
 
