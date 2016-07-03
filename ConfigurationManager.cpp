@@ -5,22 +5,22 @@ ConfigurationManager::ConfigurationManager(void)
 {
 }
 
-MapPoint ConfigurationManager::getMapPointFromString(string mapPointString) 
+MapPoint ConfigurationManager::getMapPointFromString(string mapPointString)
 {
 	MapPoint returnPoint;
 	string strX = "", strY = "";
 	unsigned index = 0;
 	char spaceIndecator = ' ';
-	while (index < mapPointString.length() && 
-		   mapPointString[index] != spaceIndecator) 
+	while (index < mapPointString.length() &&
+		   mapPointString[index] != spaceIndecator)
 	{
 		strX += mapPointString[index];
 		index++;
-	} 
+	}
 	index++;
 	returnPoint.x = atoi(strX.c_str());
-	while (index < mapPointString.length() && 
-		   mapPointString[index] != spaceIndecator) 
+	while (index < mapPointString.length() &&
+		   mapPointString[index] != spaceIndecator)
 	{
 		strY += mapPointString[index];
 		index++;
@@ -29,21 +29,21 @@ MapPoint ConfigurationManager::getMapPointFromString(string mapPointString)
 	return returnPoint;
 }
 
-RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString) 
+RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString)
 {
 	RobotSize returnRobotSize;
 	string strW = "", strH = "";
 	unsigned index = 0;
 	char spaceIndecator = ' ';
-	while (index < robotSizeString.length() && 
-		   robotSizeString[index] != spaceIndecator) 
+	while (index < robotSizeString.length() &&
+		   robotSizeString[index] != spaceIndecator)
 	{
 		strW += robotSizeString[index];
 		index++;
-	} 
+	}
 	index++;
 	returnRobotSize.width = atoi(strW.c_str());
-	while (index < robotSizeString.length() && 
+	while (index < robotSizeString.length() &&
 		   robotSizeString[index] != spaceIndecator) {
 		strH += robotSizeString[index];
 		index++;
@@ -52,23 +52,23 @@ RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString)
 	return returnRobotSize;
 }
 
-RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosString) 
+RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosString)
 {
 	RobotPosition returnRobotPosition;
 	string mapPointStr = "",angleStr="";
 	unsigned index = 0;
 	char spaceIndecator = ' ';
-	for(;index < robotPosString.length() && 
+	for(;index < robotPosString.length() &&
 		robotPosString[index] != spaceIndecator; index++){
 		mapPointStr += robotPosString[index];
 	}
 	mapPointStr += robotPosString[index++];
-	for(;index < robotPosString.length() && 
+	for(;index < robotPosString.length() &&
 		robotPosString[index] != spaceIndecator; index++){
 		mapPointStr += robotPosString[index];
-	} 
+	}
 	index++;
-	for(;index < robotPosString.length() && 
+	for(;index < robotPosString.length() &&
 		robotPosString[index] != spaceIndecator; index++){
 		angleStr += robotPosString[index];
 	}
@@ -78,7 +78,7 @@ RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosSt
 	return returnRobotPosition;
 }
 
-void ConfigurationManager::parse(string fileLocation) 
+void ConfigurationManager::parse(string fileLocation)
 {
 	string mapLocation="",startLocation="",goal="",MapResolutionCM="",
 		   GridResolutionCM="",robotSize="";
