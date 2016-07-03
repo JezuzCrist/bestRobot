@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "Cell.h"
 
 Color::Color()
@@ -15,8 +14,13 @@ Color::Color(int red, int green, int blue, float alpha)
 
 bool Color::isWhite()
 {
-	if (red == WHITE && green == WHITE && blue == WHITE)
+	bool allColorsAreWhite = this->red == WHITE;
+	allColorsAreWhite = allColorsAreWhite && this->blue == WHITE;
+	allColorsAreWhite = allColorsAreWhite && this->green == WHITE;
+	if (allColorsAreWhite)
+	{
 		return true;
+	}
 	return false;
 }
 
@@ -95,7 +99,13 @@ Color* Cell::getColor()
 
 int Cell::getDistanceBetween(Cell *other)
 {
-    return (this->x == other->x || this->y == other->y) ? SIMPLE_MOVING_COST : DIAGONAL_MOVING_COST;
+	int distanceBetween = DIAGONAL_MOVING_COST;
+
+    if (this->x == other->x || this->y == other->y)
+    {
+    	distanceBetween = SIMPLE_MOVING_COST;
+    }
+    return distanceBetween;
 }
 
 //distance estimated
@@ -103,9 +113,9 @@ int Cell::getHScore(Cell *destination)
 {
 	int dx = abs(destination->x - this->x);
     int dy = abs(destination->y - this->y);
-    return (SIMPLE_MOVING_COST * (dx + dy) /*+ 
-			(DIAGONAL_MOVING_COST - 2 * SIMPLE_MOVING_COST) * 
-			min(dx, dy)*/);
+    return (SIMPLE_MOVING_COST * (dx + dy)); /*+
+			(DIAGONAL_MOVING_COST - 2 * SIMPLE_MOVING_COST) *
+			min(dx, dy));*/
 }
 
 int Cell::getDistanceTravelled()
@@ -147,8 +157,6 @@ int Cell::min(int num, int num1)
 
 bool Cell::operator==(const Cell& other) const
 {
-	bool Equal = true;
-
 	if (this->x == other.x && this->y == other.y)
 		return true;
 

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ConfigurationManager.h"
 
 ConfigurationManager::ConfigurationManager(void)
@@ -84,8 +83,8 @@ void ConfigurationManager::parse(string fileLocation)
 		   GridResolutionCM="",robotSize="";
 	ifstream infile;
 	string line;
-
-	infile.open(fileLocation);
+	const char* hue = fileLocation.c_str();
+	infile.open(hue);
 
 	getline(infile,line);
 	for(unsigned index = 5; index < line.length(); index++){

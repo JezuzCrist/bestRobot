@@ -20,16 +20,16 @@ public:
 class Map
 {
 public:
-	Map(string& mapImageFilePath, 
+	Map(string& mapImageFilePath,
 		float mapResolution, float gridResolution, RobotSize* robotSize);
 	~Map();
-	void Map::loadFromFile(string& mapImageFilePath);
-	void Map::readImageToGrid();
-	void Map::blowObstaclesInImage(vector<unsigned char> image);
-	bool Map::inBound(int x, int y);
-	int Map::min(int num, int num1);
-	bool Map::isObstacleFound(std::vector<unsigned char> image, 
-							  int imgRow, int imgCol, ImageSize* gridChunk);
+	void loadFromFile(string& mapImageFilePath);
+	void readImageToGrid();
+	void blowObstaclesInImage(vector<unsigned char> image);
+	bool inBound(int x, int y);
+	int min(int num, int num1);
+	bool isObstacleFound(std::vector<unsigned char> image,
+						 int imgRow, int imgCol, ImageSize* gridChunk);
 
 	Cell*** map;
 

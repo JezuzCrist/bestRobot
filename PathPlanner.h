@@ -15,11 +15,11 @@ private:
 
 	Cell* getCellFromMap(int x, int y);
 	bool cellIsWalkable(Cell* Cell);
-	list<Cell*> PathPlanner::getNeighbors(Cell *current);
-	Cell* PathPlanner::getSmallestF(list<Cell*> CellsList);
-	vector<Position*> PathPlanner::reconstruct_path(Cell *start, Cell *end);
-	void PathPlanner::resetOpenedCells(list<Cell*> openList);
-	void PathPlanner::setClose(list<Cell*> openList, Cell *CellToClose);
-	void PathPlanner::setOpen(list<Cell*> openList, Cell *CellToOpen);
+	list<Cell*> getNeighbors(Cell *current);
+	Cell* getSmallestF(list<Cell*> CellsList);
+	vector<Position*> reconstruct_path(Cell *start, Cell *end);
+	void resetOpenedCells(list<Cell*> openList);
+	void setClose(list<Cell*> openList, Cell *CellToClose);
+	void setOpen(list<Cell*> openList, Cell *CellToOpen);
 };
 
