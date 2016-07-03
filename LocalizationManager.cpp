@@ -2,14 +2,20 @@
 #include "LocalizationManager.h"
 
 
+void _initRandom(){
+	srand(time(NULL));
+}
+
 LocalizationManager::LocalizationManager(void)
 {
-	int STARTING_PARTICLE_COUNT = 200;
-	int PARTICLE_SPREAD = 20;
+	this->_init();
+}
+
+void LocalizationManager::_init()
+{
 	for (int i = 0; i < STARTING_PARTICLE_COUNT; i++)
 	{
-		//initialize random seed
-		srand(time(NULL));
+		_initRandom();
 
 		double particleX =  (rand() % PARTICLE_SPREAD) / PARTICLE_SPREAD;
 		double particleY = (rand() % PARTICLE_SPREAD) / PARTICLE_SPREAD;
@@ -20,7 +26,6 @@ LocalizationManager::LocalizationManager(void)
 		_particles.push_back(newParticle);
 	}
 }
-
 
 LocalizationManager::~LocalizationManager(void)
 {
