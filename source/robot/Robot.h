@@ -1,6 +1,6 @@
 #pragma once
 #include <libplayerc++/playerc++.h>
-#include<string.h>
+#include <string.h>
 #include "../common/Position.h"
 
 

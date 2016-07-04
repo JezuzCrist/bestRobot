@@ -25,11 +25,10 @@ public:
 	~Map();
 	void loadFromFile(string& mapImageFilePath);
 	void readImageToGrid();
-	void blowObstaclesInImage(vector<unsigned char> image);
+	void blowObstaclesInImage();
 	bool inBound(int x, int y);
 	int min(int num, int num1);
-	bool isObstacleFound(std::vector<unsigned char> image,
-						 int imgRow, int imgCol, ImageSize* gridChunk);
+	bool isObstacleFound(int imgRow, int imgCol, ImageSize* gridChunk);
 
 	Cell*** map;
 

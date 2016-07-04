@@ -4,7 +4,6 @@
  *  Created on: Mar 30, 2015
  *      Author: colman
  */
-
 #include "pngUtil.h"
 #include "lodepng.h"
 #include <iostream>
