@@ -1,5 +1,6 @@
 // robot_nir_omer.cpp : Defines the entry point for the console application.
-#include "ConfigurationManager.h"
+
+#include "source/managers/configuration/ConfigurationManager.h"
 
 
 int main()
@@ -13,6 +14,6 @@ int main()
 	cout<<p.size.width<<","<<p.size.height<<endl;
 	cout<<p.mapResolutionInCm<<endl;
 	cout<<p.gridResolutionInCm<<endl;
-
+	cout<<"compiling and building is working in linux !"<<endl;
 	return 0;
 }

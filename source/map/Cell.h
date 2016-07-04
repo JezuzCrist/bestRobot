@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "math.h"
 #include "limits.h"
-#include "Position.h"
+#include "../common/Position.h"
 using namespace std;
 
 #define DIAGONAL_MOVING_COST 14

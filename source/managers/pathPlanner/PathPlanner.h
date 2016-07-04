@@ -1,6 +1,6 @@
 #pragma once
-#include "Cell.h"
-#include "map.h"
+#include "../../map/Cell.h"
+#include "../../map/Map.h"
 #include <list>
 
 class PathPlanner

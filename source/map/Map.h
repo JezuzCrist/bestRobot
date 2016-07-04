@@ -1,8 +1,8 @@
 #pragma once
-#include "pngUtil.h"
-#include "lodepng.h"
+#include "../libs/pngUtil.h"
+#include "../libs/lodepng.h"
 #include "Cell.h"
-#include "ConfigurationManager.h"
+#include "../managers/configuration/ConfigurationManager.h"
 
 using namespace std;
 

@@ -83,8 +83,8 @@ void ConfigurationManager::parse(string fileLocation)
 		   GridResolutionCM="",robotSize="";
 	ifstream infile;
 	string line;
-	const char* hue = fileLocation.c_str();
-	infile.open(hue);
+	const char* fileLocationInChar = fileLocation.c_str();
+	infile.open(fileLocationInChar);
 
 	getline(infile,line);
 	for(unsigned index = 5; index < line.length(); index++){

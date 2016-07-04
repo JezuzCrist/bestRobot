@@ -1,6 +1,6 @@
 #pragma once
 #include "Particle.h"
-#include "Position.h"
+
 
 using namespace std;
 
@@ -13,7 +13,7 @@ public:
 	LocalizationManager(void);
 	~LocalizationManager(void);
 	void update(double changeX, double changeY, double changeYaw, Robot* robot);
-	Position getEstimatedPosition();
+	PositionD getEstimatedPosition();
 
 
 private:

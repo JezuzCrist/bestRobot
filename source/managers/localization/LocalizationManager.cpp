@@ -22,7 +22,7 @@ void LocalizationManager::_init()
 
 void LocalizationManager::update(double changeX, double changeY, double changeYaw, Robot* robot){
 	for(int particalIndex = 0; particalIndex < PARTICLE_COUNT; particalIndex++){
-		this->_particles[particalIndex]->update(changeX,changeY,changeYaw,robot);
+		//this->_particles[particalIndex]->update(changeX,changeY,changeYaw,robot);
 	}
 
 }

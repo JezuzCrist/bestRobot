@@ -1,6 +1,8 @@
 Debug/
 ReadMe.txt
+*.cproject
 .cproject
+
 *.opensdf
 *.sln
 *.suo

@@ -1,5 +1,5 @@
 #pragma once
-#include "Position.h"
+#include "../../common/Position.h"
 #include <vector>
 #include <math.h>
 

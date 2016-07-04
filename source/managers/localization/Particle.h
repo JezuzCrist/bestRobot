@@ -4,8 +4,8 @@
 #include <algorithm>    // std::max
 #include "math.h"
 
-#include "PositionD.h"
-#include "Robot.h"
+#include "../../common/PositionD.h"
+#include "../../robot/Robot.h"
 
 using namespace std;
 
