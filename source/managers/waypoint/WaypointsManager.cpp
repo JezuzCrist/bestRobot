@@ -5,6 +5,7 @@ WaypointsManager::WaypointsManager(vector<Position*> robotPath)
 {
 	this->_robotPath = robotPath;
 	this->wayPointIndex = 0;
+	this->_buildWayPoints();
 }
 
 bool WaypointsManager::_isRobotInWayPoint(Position* currentPosition)
@@ -29,12 +30,11 @@ void WaypointsManager::update(Position* currentRobotPos)
 
 void WaypointsManager::_buildWayPoints()
 {
-	for (int i = 0; i < this->_robotPath.size();
-		 i+= this->numberOfCellsToSkipInPath)
+	for (int i = 0; i < this->_robotPath.size(); i += this->numberOfCellsToSkipInPath)
 	{
 		this->_wayPoints.push_back(this->_robotPath[i]);
 	}
-	int lastWaypointIndex = this->_robotPath.size()-1;
+	int lastWaypointIndex = this->_robotPath.size() - 1;
 	this->_wayPoints.push_back(this->_robotPath[lastWaypointIndex]);
 }
 
