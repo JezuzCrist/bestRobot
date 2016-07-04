@@ -2,6 +2,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <algorithm>    // std::max
+#include "math.h"
 
 #include "PositionD.h"
 #include "Robot.h"
@@ -29,11 +30,11 @@ public:
 	double probMov(double deltaX, double deltaY, double deltaTeta);
 
 	double getBelief();
-	PositionD getPosition(); 
+	PositionD getPosition();
 
 private:
 	double _belief,acurecyPrediction;
-	PositionD position; 
+	PositionD position;
 
 
 	void _cloneFrom(PositionD position);

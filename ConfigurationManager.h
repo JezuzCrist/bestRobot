@@ -1,19 +1,19 @@
-#pragma once
-#include "iostream"
 #include "fstream"
 #include "sstream"
+#include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
-struct MapPoint 
+struct MapPoint
 {
 	int x, y;
 };
-struct RobotSize 
+struct RobotSize
 {
 	double width, height;
 };
-struct RobotPosition 
+struct RobotPosition
 {
 	MapPoint point;
 	double angle;
@@ -25,10 +25,10 @@ public:
 	ConfigurationManager(void);
 	~ConfigurationManager(void);
 
-	void ConfigurationManager::parse(string);
-	RobotPosition ConfigurationManager::getRobotPositionFromString(string);
-	RobotSize ConfigurationManager::getRobotSizeFromString(string);
-	MapPoint ConfigurationManager::getMapPointFromString(string);
+	void parse(string);
+	RobotPosition getRobotPositionFromString(string);
+	RobotSize getRobotSizeFromString(string);
+	MapPoint getMapPointFromString(string);
 
 	string mapFileLocation;
 	RobotPosition startPosition;

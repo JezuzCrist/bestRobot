@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "PathPlanner.h"
 
 PathPlanner::PathPlanner(Map* worldMap)
@@ -16,7 +15,7 @@ bool PathPlanner::cellIsWalkable(Cell *cell)
 	// obstacle case
 	for (int i = -1; i < 2; ++i)
 		for (int j = -1; j < 2; ++j)
-			if (this->_map -> inBound(cell->getX() + i, cell->getY() + j) && 
+			if (this->_map -> inBound(cell->getX() + i, cell->getY() + j) &&
 				!getCellFromMap(cell->getX() + i, cell->getY() + j)-> walkable)
 				return false;
 	return true;
@@ -93,7 +92,7 @@ void PathPlanner::setClose(list<Cell*> openList, Cell *cellToClose)
     // Add the current cell to the closedList
     cellToClose->closed = true;
 	// Remove the current cell from the openList
-	openList.remove(cellToClose); 
+	openList.remove(cellToClose);
 }
 
 void PathPlanner::setOpen(list<Cell*> openList, Cell *cellToOpen)
@@ -148,7 +147,7 @@ vector<Position*> PathPlanner::getPath(int sourceX, int sourceY, int destX, int 
             {
                 // If it has a wroste g score than the one that pass through the current cell
                 // then its path is improved when it's parent is the current cell
-				if (neighbor->getDistanceTravelled() > 
+				if (neighbor->getDistanceTravelled() >
 					current->getDistanceTravelled() + current->getDistanceBetween(neighbor))
                 {
                     // Change its parent and g score

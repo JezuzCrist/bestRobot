@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "WaypointsManager.h"
 
 
@@ -11,9 +10,9 @@ WaypointsManager::WaypointsManager(vector<Position*> robotPath)
 bool WaypointsManager::_isRobotInWayPoint(Position* currentPosition)
 {
 	Position* activeWaypoint = this->getActiveWaypoint();
-	
-	double distanceFromWaypoint = 
-				sqrt( pow(activeWaypoint->x - currentPosition->x, 2) + 
+
+	double distanceFromWaypoint =
+				sqrt( pow(activeWaypoint->x - currentPosition->x, 2) +
 					  pow(activeWaypoint->y - currentPosition->y , 2));
 	bool isOnWayPoint = (distanceFromWaypoint <= this->distanceThreshold);
 
@@ -30,7 +29,7 @@ void WaypointsManager::update(Position* currentRobotPos)
 
 void WaypointsManager::_buildWayPoints()
 {
-	for (int i = 0; i < this->_robotPath.size(); 
+	for (int i = 0; i < this->_robotPath.size();
 		 i+= this->numberOfCellsToSkipInPath)
 	{
 		this->_wayPoints.push_back(this->_robotPath[i]);
