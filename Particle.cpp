@@ -74,7 +74,7 @@ double Particle::_getParticleObservationsProbablity(Robot* robot){
 	return probabiltyEstimation;
 }
 void Particle::_updateLocationEstimation(){
-
+	//this->_belief = this->_getParticleObservationsProbablity() * this->_belief * this->getProgressProbability();
 }
 
 void Particle::mutateFromRefrance(Particle* partical){
