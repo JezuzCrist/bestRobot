@@ -36,9 +36,9 @@ void Particle::_cloneFrom(MapPosition3D clonePosition){
 }
 void Particle::_randomizeLocation(){
 	_initRandom();
-	this->position.x = max(0.0, this->position.x + (rand() % LOCATION_RANDOMNESS));
-	this->position.y =max(0.0, this->position.y + (rand() % LOCATION_RANDOMNESS));
-	this->position.yaw = max(0.0, this->position.yaw + (rand() % LOCATION_RANDOMNESS));
+	this->position.x = std::max(0.0, this->position.x + (rand() % LOCATION_RANDOMNESS));
+	this->position.y = std::max(0.0, this->position.y + (rand() % LOCATION_RANDOMNESS));
+	this->position.yaw = std::max(0.0, this->position.yaw + (rand() % LOCATION_RANDOMNESS));
 }
 double Particle::_getParticleObservationsProbablity(Robot* robot){
 	unsigned hits = 0, misses = 0;

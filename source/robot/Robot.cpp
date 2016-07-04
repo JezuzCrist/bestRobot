@@ -1,7 +1,7 @@
 #include "Robot.h"
 
 
-Robot::Robot(void)
+Robot::Robot(char* ip, int port,PositionD* startingPosition,int width,int height)
 {
 
 }
