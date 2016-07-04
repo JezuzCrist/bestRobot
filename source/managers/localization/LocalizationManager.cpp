@@ -19,11 +19,29 @@ void LocalizationManager::_init()
 		}
 	}
 }
-
+bool isParticalBelifeHigher(Particle* p1, Particle* p2){
+	return (p1->getBelief() < p2->getBelief());
+}
+void LocalizationManager::_sortParticalsByBelife(){
+	sort(this->_particles, this->_particles + PARTICLE_COUNT,isParticalBelifeHigher);
+}
+Particle* LocalizationManager::_getBestParticle(){
+	return this->_particles[PARTICLE_COUNT - 1];
+}
 void LocalizationManager::update(double changeX, double changeY, double changeYaw, Robot* robot){
+	// update the particals
 	for(int particalIndex = 0; particalIndex < PARTICLE_COUNT; particalIndex++){
 		//this->_particles[particalIndex]->update(changeX,changeY,changeYaw,robot);
 	}
+
+	//sort the particals
+	this->_sortParticalsByBelife();
+
+	for (int newParticalIndex = 0; newParticalIndex < PARTICLE_KILL; ++newParticalIndex)
+	{
+		this->_particles[newParticalIndex]->mutateFromRefrance(this->_getBestParticle());
+	}
+
 
 }
 LocalizationManager::~LocalizationManager(void)
