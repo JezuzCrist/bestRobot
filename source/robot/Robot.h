@@ -1,8 +1,8 @@
 #pragma once
 #include <libplayerc++/playerc++.h>
-#include "../common/PositionD.h"
-using namespace std;
-using namespace PlayerCc;
+#include<string.h>
+#include "../common/Position.h"
+
 
 
 #define NUMBER_OF_LASERS 6
@@ -10,20 +10,21 @@ using namespace PlayerCc;
 class Robot
 {
 public:
-	Robot(char* ip, int port,PositionD* startingPosition,int width,int height);
+	Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int height);
 	~Robot(void);
-	PositionD* getPosition();
+	WorldPosition3D* getPosition();
 	float getLaserDistance(int index);
 	int getWidth();
 	int getHeight();
-	void goTo(PositionD* wantedPosition);
+	void goTo(WorldPosition3D* wantedPosition);
 
 private:
-	PositionD _position;
+	WorldPosition3D* _position;
 	int _width,_height;
-	PlayerClient* _playerClient;
-	Position2dProxy* _playerPsition;
-	LaserProxy* _lasers;
+	PlayerCc::PlayerClient* _playerClient;
+	PlayerCc::Position2dProxy* _playerPsition;
+	PlayerCc::LaserProxy* _lasers;
 	void _updatePosition();
+	void _setSpeed(float speed, float angularSpeed);
 
 };
