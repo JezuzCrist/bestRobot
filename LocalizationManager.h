@@ -12,7 +12,7 @@ class LocalizationManager
 public:
 	LocalizationManager(void);
 	~LocalizationManager(void);
-	void update();
+	void update(double changeX, double changeY, double changeYaw, Robot* robot);
 	Position getEstimatedPosition();
 
 
