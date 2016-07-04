@@ -1,7 +1,13 @@
 Debug/
 ReadMe.txt
-*.cproject
+
+# Eclipse Core
+.project
+
+# CDT-specific (C/C++ Development Tooling)
 .cproject
+
+
 
 *.opensdf
 *.sln
