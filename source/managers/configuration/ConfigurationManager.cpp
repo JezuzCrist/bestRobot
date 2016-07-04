@@ -4,9 +4,9 @@ ConfigurationManager::ConfigurationManager(void)
 {
 }
 
-MapPoint ConfigurationManager::getMapPointFromString(string mapPointString)
+WorldPosition2D ConfigurationManager::getMapPointFromString(string mapPointString)
 {
-	MapPoint returnPoint;
+	WorldPosition2D returnPoint;
 	string strX = "", strY = "";
 	unsigned index = 0;
 	char spaceIndecator = ' ';
@@ -28,9 +28,9 @@ MapPoint ConfigurationManager::getMapPointFromString(string mapPointString)
 	return returnPoint;
 }
 
-RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString)
+RobotSize* ConfigurationManager::getRobotSizeFromString(string robotSizeString)
 {
-	RobotSize returnRobotSize;
+	RobotSize* returnRobotSize = new RobotSize();
 	string strW = "", strH = "";
 	unsigned index = 0;
 	char spaceIndecator = ' ';
@@ -41,19 +41,19 @@ RobotSize ConfigurationManager::getRobotSizeFromString(string robotSizeString)
 		index++;
 	}
 	index++;
-	returnRobotSize.width = atoi(strW.c_str());
+	returnRobotSize->width = atoi(strW.c_str());
 	while (index < robotSizeString.length() &&
 		   robotSizeString[index] != spaceIndecator) {
 		strH += robotSizeString[index];
 		index++;
 	}
-	returnRobotSize.height = atoi(strH.c_str());
+	returnRobotSize->height = atoi(strH.c_str());
 	return returnRobotSize;
 }
 
-RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosString)
+WorldPosition3D ConfigurationManager::getRobotPositionFromString(string robotPosString)
 {
-	RobotPosition returnRobotPosition;
+	WorldPosition3D returnRobotPosition;
 	string mapPointStr = "",angleStr="";
 	unsigned index = 0;
 	char spaceIndecator = ' ';
@@ -72,15 +72,15 @@ RobotPosition ConfigurationManager::getRobotPositionFromString(string robotPosSt
 		angleStr += robotPosString[index];
 	}
 
-	returnRobotPosition.point = getMapPointFromString(mapPointStr);
-	returnRobotPosition.angle = atof(angleStr.c_str());
+	WorldPosition2D worldPosition = getMapPointFromString(mapPointStr);
+	returnRobotPosition = WorldPosition3D(worldPosition, atof(angleStr.c_str()));
 	return returnRobotPosition;
 }
 
 void ConfigurationManager::parse(string fileLocation)
 {
-	string mapLocation="",startLocation="",goal="",MapResolutionCM="",
-		   GridResolutionCM="",robotSize="";
+	string mapLocation = "", startLocation = "", goal = "", MapResolutionCM = "",
+		   GridResolutionCM = "", robotSize = "";
 	ifstream infile;
 	string line;
 	const char* fileLocationInChar = fileLocation.c_str();
@@ -120,7 +120,7 @@ void ConfigurationManager::parse(string fileLocation)
 	this-> gridResolutionInCm = atof(GridResolutionCM.c_str());
 	this-> startPosition = getRobotPositionFromString(startLocation);
 	this-> mapFileLocation = mapLocation;
-	this-> size = getRobotSizeFromString(robotSize);
+	this-> robotSize = getRobotSizeFromString(robotSize);
 }
 
 ConfigurationManager::~ConfigurationManager(void)

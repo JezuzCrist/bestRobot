@@ -8,7 +8,7 @@ class PathPlanner
 public:
 	PathPlanner(Map* worldMap);
 
-	vector<Position*> getPath(int sourceX, int sourceY, int destX, int destY);
+	vector<MapPosition2D*> getPath(MapPosition2D sourcePoint, MapPosition2D destPoint);
 
 private:
 	Map* _map;
@@ -17,7 +17,7 @@ private:
 	bool cellIsWalkable(Cell* Cell);
 	list<Cell*> getNeighbors(Cell *current);
 	Cell* getSmallestF(list<Cell*> CellsList);
-	vector<Position*> reconstruct_path(Cell *start, Cell *end);
+	vector<MapPosition2D*> reconstruct_path(Cell *start, Cell *end);
 	void resetOpenedCells(list<Cell*> openList);
 	void setClose(list<Cell*> openList, Cell *CellToClose);
 	void setOpen(list<Cell*> openList, Cell *CellToOpen);

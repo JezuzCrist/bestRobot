@@ -14,7 +14,7 @@ public:
 	LocalizationManager(void);
 	~LocalizationManager(void);
 	void update(double changeX, double changeY, double changeYaw, Robot* robot);
-	PositionD getEstimatedPosition();
+	MapPosition3D getEstimatedPosition();
 
 
 private:

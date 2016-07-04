@@ -20,7 +20,7 @@ Particle::Particle(Particle* mutateFromThisPartical)
 }
 
 double Particle::getBelief(){	return this->_belief;	}
-PositionD Particle::getPosition(){	return this->position;	}
+MapPosition3D Particle::getPosition(){	return this->position;	}
 
 
 void Particle::move(double changeX, double changeY, double changeYaw)
@@ -29,7 +29,7 @@ void Particle::move(double changeX, double changeY, double changeYaw)
 	this->position.y += changeY;
 	this->position.yaw += changeYaw;
 }
-void Particle::_cloneFrom(PositionD clonePosition){
+void Particle::_cloneFrom(MapPosition3D clonePosition){
 	this->position.x = clonePosition.x;
 	this->position.y = clonePosition.y;
 	this->position.yaw = clonePosition.yaw;

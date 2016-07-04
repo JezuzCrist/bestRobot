@@ -4,7 +4,7 @@
 #include <algorithm>    // std::max
 #include "math.h"
 
-#include "../../common/PositionD.h"
+#include "../../common/Position.h"
 #include "../../robot/Robot.h"
 
 using namespace std;
@@ -30,14 +30,14 @@ public:
 	double probMov(double deltaX, double deltaY, double deltaTeta);
 
 	double getBelief();
-	PositionD getPosition();
+	MapPosition3D getPosition();
 
 private:
 	double _belief,acurecyPrediction;
-	PositionD position;
+	MapPosition3D position;
 
 
-	void _cloneFrom(PositionD position);
+	void _cloneFrom(MapPosition3D position);
 	void _randomizeLocation();
 	double _getParticleObservationsProbablity(Robot* robot);
 	void _updateLocationEstimation();

@@ -65,10 +65,10 @@ Cell* PathPlanner::getSmallestF(list<Cell*> cellsList)
 	return minCell;
 }
 
-vector<Position*> PathPlanner::reconstruct_path(Cell *start, Cell *end)
+vector<MapPosition2D*> PathPlanner::reconstruct_path(Cell *start, Cell *end)
 {
 	Cell *current = end;
-	vector<Position*> path;
+	vector<MapPosition2D*> path;
 
 	while (current->hasParent() && !(current == start))
     {
@@ -102,11 +102,11 @@ void PathPlanner::setOpen(list<Cell*> openList, Cell *cellToOpen)
 	openList.push_back(cellToOpen);
 }
 
-vector<Position*> PathPlanner::getPath(int sourceX, int sourceY, int destX, int destY)
+vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPosition2D destPoint)
 {
     // Define cells to work with
-	Cell *start = getCellFromMap(sourceX, sourceY);
-    Cell *end = getCellFromMap(destX, destY);
+	Cell *start = getCellFromMap(sourcePoint.x, sourcePoint.y);
+    Cell *end = getCellFromMap(destPoint.x, destPoint.y);
 	start->g = 0;
 	start->f = start->getHScore(end);
     Cell *current = start;
@@ -171,7 +171,7 @@ vector<Position*> PathPlanner::getPath(int sourceX, int sourceY, int destX, int 
 	resetOpenedCells(openList);
 
     // Resolve the path starting from the end cell
-	vector<Position*> fromStartToEnd = reconstruct_path(start, end);
+	vector<MapPosition2D*> fromStartToEnd = reconstruct_path(start, end);
 
     return fromStartToEnd;
 }

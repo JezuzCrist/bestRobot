@@ -1,16 +1,16 @@
 #include "WaypointsManager.h"
 
 
-WaypointsManager::WaypointsManager(vector<Position*> robotPath)
+WaypointsManager::WaypointsManager(vector<MapPosition2D*> robotPath)
 {
 	this->_robotPath = robotPath;
-	this->wayPointIndex = 0;
+	this-> wayPointIndex = 0;
 	this->_buildWayPoints();
 }
 
-bool WaypointsManager::_isRobotInWayPoint(Position* currentPosition)
+bool WaypointsManager::_isRobotInWayPoint(MapPosition2D* currentPosition)
 {
-	Position* activeWaypoint = this->getActiveWaypoint();
+	MapPosition2D* activeWaypoint = this->getActiveWaypoint();
 
 	double distanceFromWaypoint =
 				sqrt( pow(activeWaypoint->x - currentPosition->x, 2) +
@@ -20,7 +20,7 @@ bool WaypointsManager::_isRobotInWayPoint(Position* currentPosition)
 	return isOnWayPoint;
 }
 
-void WaypointsManager::update(Position* currentRobotPos)
+void WaypointsManager::update(MapPosition2D* currentRobotPos)
 {
 	if (this->_isRobotInWayPoint(currentRobotPos))
 	{
@@ -48,7 +48,7 @@ bool WaypointsManager::isRobotInEndGoal()
 	return (this->_wayPoints.size() < this->wayPointIndex);
 }
 
-Position* WaypointsManager::getActiveWaypoint()
+MapPosition2D* WaypointsManager::getActiveWaypoint()
 {
 	return (this->_wayPoints[this->wayPointIndex]);
 }

@@ -57,9 +57,9 @@ Cell::Cell(int x, int y, bool walkable)
 	(this -> walkable == true) ? color->setWhite() : color->setBlack();
 }
 
-Position* Cell::getPosition()
+MapPosition2D* Cell::getPosition()
 {
-    return new Position(x, y);
+    return new MapPosition2D(x, y);
 }
 
 Cell* Cell::getParent()

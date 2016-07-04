@@ -8,21 +8,21 @@ using namespace std;
 class WaypointsManager
 {
 public:
-	WaypointsManager(vector<Position*> robotPath);
+	WaypointsManager(vector<MapPosition2D*> robotPath);
 	~WaypointsManager(void);
 
-	void update(Position* currentPosition);
+	void update(MapPosition2D* currentPosition);
 	bool isRobotInEndGoal();
-	Position* getActiveWaypoint();
+	MapPosition2D* getActiveWaypoint();
 
 private:
 	const int static distanceThreshold = 10;
 	const int static numberOfCellsToSkipInPath = 5;
 
-	vector<Position*> _robotPath;
-	vector<Position*> _wayPoints;
+	vector<MapPosition2D*> _robotPath;
+	vector<MapPosition2D*> _wayPoints;
 	unsigned wayPointIndex;
-	bool _isRobotInWayPoint(Position* currentPosition);
+	bool _isRobotInWayPoint(MapPosition2D* currentPosition);
 	void _setNextWayPoint();
 	void _buildWayPoints();
 };

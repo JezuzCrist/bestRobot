@@ -1,3 +1,4 @@
+#include "../../common/Position.h"
 #include "fstream"
 #include "sstream"
 #include <iostream>
@@ -5,18 +6,9 @@
 
 using namespace std;
 
-struct MapPoint
-{
-	int x, y;
-};
 struct RobotSize
 {
 	double width, height;
-};
-struct RobotPosition
-{
-	MapPoint point;
-	double angle;
 };
 
 class ConfigurationManager
@@ -26,14 +18,14 @@ public:
 	~ConfigurationManager(void);
 
 	void parse(string);
-	RobotPosition getRobotPositionFromString(string);
-	RobotSize getRobotSizeFromString(string);
-	MapPoint getMapPointFromString(string);
+	WorldPosition3D getRobotPositionFromString(string);
+	RobotSize* getRobotSizeFromString(string);
+	WorldPosition2D getMapPointFromString(string);
 
 	string mapFileLocation;
-	RobotPosition startPosition;
-	MapPoint goal;
-	RobotSize size;
+	WorldPosition3D startPosition;
+	WorldPosition2D goal;
+	RobotSize* robotSize;
 	double mapResolutionInCm;
 	double gridResolutionInCm;
 };

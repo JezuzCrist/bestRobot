@@ -33,7 +33,7 @@ public:
 	Cell();
 	Cell(int x, int y, bool walkable);
 	Cell(int x, int y, bool walkable, Color *color);
-	Position* getPosition();
+	MapPosition2D* getPosition();
 	Cell* getParent();
 	void setParent(Cell *p);
 	int getX();
