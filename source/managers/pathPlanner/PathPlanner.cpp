@@ -36,7 +36,7 @@ list<Cell*> PathPlanner::getNeighbors(Cell *current)
 			neighbor = getCellFromMap(current->getX() + x, current->getY() + y);
 
 			// If it's current cell then pass
-			if (neighbor == current)
+			if (neighbor->x == current->x && neighbor->y == current->y)
 				continue;
 
             // If it's closed or not walkable then pass
@@ -58,7 +58,7 @@ Cell* PathPlanner::getSmallestF(list<Cell*> cellsList)
 
 	for (i = cellsList.begin(); i != cellsList.end(); ++ i)
 	{
-        if (i == cellsList.begin() || (*i)->getFScore() <= minCell->getFScore())
+        if (((*i)->x == (*cellsList.begin())->x  && (*i)->y == (*cellsList.begin())->y) || (*i)->getFScore() <= minCell->getFScore())
             minCell = (*i);
 	}
 
@@ -70,7 +70,7 @@ vector<MapPosition2D*> PathPlanner::reconstruct_path(Cell *start, Cell *end)
 	Cell *current = end;
 	vector<MapPosition2D*> path;
 
-	while (current->hasParent() && !(current == start))
+	while (current->hasParent() && !(current->x == start->x && current->y == start->y))
     {
         path.push_back(current->getPosition());
         current = current->getParent();
@@ -79,33 +79,32 @@ vector<MapPosition2D*> PathPlanner::reconstruct_path(Cell *start, Cell *end)
 	return path;
 }
 
-void PathPlanner::resetOpenedCells(list<Cell*> openList)
+void PathPlanner::resetOpenedCells(list<Cell*>& openList)
 {
 	list<Cell*>::iterator i;
 	for (i = openList.begin(); i != openList.end(); ++ i)
         (*i)->opened = false;
 }
 
-void PathPlanner::setClose(list<Cell*> openList, Cell *cellToClose)
+void PathPlanner::setClose(list<Cell*>& openList, Cell& cellToClose)
 {
-	cellToClose->opened = false;
+	cellToClose.opened = false;
     // Add the current cell to the closedList
-    cellToClose->closed = true;
+    cellToClose.closed = true;
 	// Remove the current cell from the openList
-	openList.remove(cellToClose);
+	openList.remove(&cellToClose);
 }
 
-void PathPlanner::setOpen(list<Cell*> openList, Cell *cellToOpen)
+void PathPlanner::setOpen(list<Cell*>& openList, Cell& cellToOpen)
 {
-	cellToOpen->opened = true;
-	cellToOpen->opened = false;
-	openList.push_back(cellToOpen);
+	cellToOpen.opened = true;
+	cellToOpen.closed = false;
+	openList.push_back(&cellToOpen);
 }
 
 vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPosition2D destPoint)
 {
     // Define cells to work with
-	cout << "initstared"<<endl;
 	Cell *start = getCellFromMap(sourcePoint.x, sourcePoint.y);
     Cell *end = getCellFromMap(destPoint.x, destPoint.y);
 	start->g = 0;
@@ -115,7 +114,7 @@ vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPositi
 
 	if (!start->walkable || !end->walkable)
 		throw "The cell (start or end) is not walkable " + end->walkable;
-	cout << "2"<<endl;
+
     // Define the open and the close list
     list<Cell*> openList;
 	list<Cell*> neighbors;
@@ -129,18 +128,18 @@ vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPositi
     {
         // Look for the smallest F value in the openList and make it the current cell
         current = getSmallestF(openList);
-        cout << current->x<< "  " << current->y<<endl;
-        cout << current->x<< "  " << current->y<<endl;
+
         // Stop if we reached the end
         if (current->x == end->x && current->y == end->y)
         {
         	break;
         }
 
-		setClose(openList, current);
+		setClose(openList, *current);
 
         // Get all current's adjacent walkable cells
 		neighbors = getNeighbors(current);
+
         for (i = neighbors.begin(); i != neighbors.end(); ++i)
 		{
 			neighbor = (*i);
@@ -161,7 +160,7 @@ vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPositi
             else
             {
                 // Add it to the openList with current cell as parent
-				setOpen(openList, neighbor);
+				setOpen(openList, *neighbor);
 
                 // Compute it's g, h and f score
                 neighbor->setParent(current);

@@ -17,6 +17,7 @@ int main()
 	cout<<p.gridResolutionInCm<<endl;
 	cout<<"compiling and building is working in linux !"<<endl;
 	*/
+
 	ConfigurationManager paramParser = ConfigurationManager();
 	paramParser.parse("parameters.txt");
 	Map* map = new Map(paramParser.mapFileLocation,
@@ -26,16 +27,12 @@ int main()
 	cout << "sds"<< endl;
 	PathPlanner* pathPlanner = new PathPlanner(map);
 	MapPosition2D goal, startPosition;
-	/*goal.x = paramParser.goal.x;
-	goal.y = paramParser.goal.y;
-	startPosition.x = paramParser.startPosition.x;
-	startPosition.y = paramParser.startPosition.y;*/
-	goal.x = 0;
+	goal.x = 20;
 	goal.y = 0;
-	startPosition.x = 20;
-	startPosition.y =0;
+	startPosition.x = 0;
+	startPosition.y = 0;
 	cout << "ds"<< endl;
 	vector<MapPosition2D*> pathToGoal = pathPlanner->getPath(startPosition,goal);
-	cout << "HUE" << pathToGoal[0];
+	cout << "HUE" << endl;
 	return 0;
 }

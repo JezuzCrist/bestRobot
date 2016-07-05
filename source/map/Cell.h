@@ -5,8 +5,6 @@
 #include "../common/Position.h"
 using namespace std;
 
-#define DIAGONAL_MOVING_COST 14
-#define SIMPLE_MOVING_COST 10
 #define BLACK 0
 #define WHITE 255
 
@@ -57,8 +55,8 @@ public:
 	Cell* parent;
 	bool closed, opened, walkable;
 	Color* color;
-	//const static int SIMPLE_MOVING_COST = 10;
-	//const static int DIAGONAL_MOVING_COST = 14;
+	const static int SIMPLE_MOVING_COST = 10;
+	const static int DIAGONAL_MOVING_COST = 14;
 	//const static int INFINITY = INT_MAX;
 	//void init();
 };

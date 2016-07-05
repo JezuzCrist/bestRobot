@@ -18,8 +18,8 @@ private:
 	list<Cell*> getNeighbors(Cell *current);
 	Cell* getSmallestF(list<Cell*> CellsList);
 	vector<MapPosition2D*> reconstruct_path(Cell *start, Cell *end);
-	void resetOpenedCells(list<Cell*> openList);
-	void setClose(list<Cell*> openList, Cell *CellToClose);
-	void setOpen(list<Cell*> openList, Cell *CellToOpen);
+	void resetOpenedCells(list<Cell*>& openList);
+	void setClose(list<Cell*>& openList, Cell& CellToClose);
+	void setOpen(list<Cell*>& openList, Cell& CellToOpen);
 };
 
