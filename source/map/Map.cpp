@@ -25,16 +25,17 @@ void Map::loadFromFile(string& mapImageFilePath)
 	// Read image and save image size to member;
 	unsigned height, width;
 	lodepng::decode(this->image, width, height, mapImageFilePath);
+	cout << width << endl;
 	this->imgSize = new ImageSize(width, height);
 
 	// Calc and save the grid size to member;
-	int gridHeight = (int)(this->height *
+	int gridHeight = (int)(this->imgSize->height *
 						   this->mapResolution / this->gridResolution);
-	int gridWidth = (int)(this->width *
+	int gridWidth = (int)(this->imgSize->width *
 						  this->mapResolution / this->gridResolution);
 	this->mapSize = new ImageSize(gridWidth, gridHeight);
 
-	blowObstaclesInImage(this->image);
+	blowObstaclesInImage();
 	readImageToGrid();
 }
 
@@ -57,7 +58,7 @@ void Map::readImageToGrid()
 		{
 			mapRow = imgRow / resolutionRelation;
 			mapCol = imgCol / resolutionRelation;
-			color = this->image[imgRow * this->width * 4 + imgCol * 4];
+			color = this->image[imgRow * imgSize->width * 4 + imgCol * 4];
 			bool isWalkable = false;
 			if (color == WHITE)
 			{
@@ -69,7 +70,7 @@ void Map::readImageToGrid()
 }
 
 // Blow obstacles accroding to robot size.
-void Map::blowObstaclesInImage(vector<unsigned char> image)
+void Map::blowObstaclesInImage()
 {
 	bool isBlack;
 	unsigned int color;
@@ -81,18 +82,18 @@ void Map::blowObstaclesInImage(vector<unsigned char> image)
 	{
 		for (int imgCol = 0; imgCol < imgSize->width; imgCol++)
 		{
-			isBlack = isObstacleFound(image, imgRow, imgCol,
+			isBlack = isObstacleFound(imgRow, imgCol,
 									  radiusToSearchObstacle);
 			color = (isBlack == true) ? BLACK : WHITE;
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = color;
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = color;
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 3] = 255;
+			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
+			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = color;
+			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = color;
+			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 3] = 255;
 		}
 	}
 }
 
-bool Map::isObstacleFound(std::vector<unsigned char> image, int imgRow,
+bool Map::isObstacleFound(int imgRow,
 						  int imgCol, ImageSize* radiusToSearchObstacle)
 {
 	int verticalRadius = min(imgRow + radiusToSearchObstacle->height,
@@ -103,9 +104,9 @@ bool Map::isObstacleFound(std::vector<unsigned char> image, int imgRow,
 	{
 		for (int j = imgCol; j < horizontalRadius; j++)
 		{
-			if (image[i * imgSize->width * 4 + j * 4 + 0] != WHITE ||
-				image[i * imgSize->width * 4 + j * 4 + 1] != WHITE ||
-				image[i * imgSize->width * 4 + j * 4 + 2] != WHITE)
+			if (this->image[i * imgSize->width * 4 + j * 4 + 0] != WHITE ||
+					this->image[i * imgSize->width * 4 + j * 4 + 1] != WHITE ||
+					this->image[i * imgSize->width * 4 + j * 4 + 2] != WHITE)
 			{
 				return true;
 			}

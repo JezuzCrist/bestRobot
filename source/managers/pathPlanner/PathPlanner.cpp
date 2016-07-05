@@ -105,6 +105,7 @@ void PathPlanner::setOpen(list<Cell*> openList, Cell *cellToOpen)
 vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPosition2D destPoint)
 {
     // Define cells to work with
+	cout << "initstared"<<endl;
 	Cell *start = getCellFromMap(sourcePoint.x, sourcePoint.y);
     Cell *end = getCellFromMap(destPoint.x, destPoint.y);
 	start->g = 0;
@@ -114,7 +115,7 @@ vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPositi
 
 	if (!start->walkable || !end->walkable)
 		throw "The cell (start or end) is not walkable " + end->walkable;
-
+	cout << "2"<<endl;
     // Define the open and the close list
     list<Cell*> openList;
 	list<Cell*> neighbors;
@@ -128,16 +129,18 @@ vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPositi
     {
         // Look for the smallest F value in the openList and make it the current cell
         current = getSmallestF(openList);
-
+        cout << current->x<< "  " << current->y<<endl;
+        cout << current->x<< "  " << current->y<<endl;
         // Stop if we reached the end
-        if (current == end)
-            break;
+        if (current->x == end->x && current->y == end->y)
+        {
+        	break;
+        }
 
 		setClose(openList, current);
 
         // Get all current's adjacent walkable cells
 		neighbors = getNeighbors(current);
-
         for (i = neighbors.begin(); i != neighbors.end(); ++i)
 		{
 			neighbor = (*i);
