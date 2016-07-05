@@ -1,11 +1,5 @@
 #include "PositionConveter.h"
 
-PositionConveter::PositionConveter(ConfigurationManager* paramParser)
-{
-	this -> resolutionRelation = (int)(paramParser->gridResolutionInCm /
-									   paramParser->mapResolutionInCm);
-}
-
 WorldPosition2D* PositionConveter::getWorldPosition2D(MapPosition2D* mapPosition)
 {
 	WorldPosition2D* worldPosFromMapPos;
