@@ -13,8 +13,9 @@ class PositionConveter
 {
 public:
 	PositionConveter(ConfigurationManager* paramParser);
-	WorldPosition2D* getWorldPosition(MapPosition2D* mapPosition);
-	MapPosition2D* getMapPosition(WorldPosition2D* worldPosition);
+	WorldPosition2D* getWorldPosition2D(MapPosition2D* mapPosition);
+	MapPosition2D* getMapPosition2D(WorldPosition2D* worldPosition);
+	WorldPosition3D* getWorldPosition3D(WorldPosition2D* worldPosition);
 
 private:
 	int resolutionRelation;
