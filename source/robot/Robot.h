@@ -7,8 +7,8 @@
 #define NUMBER_OF_LASERS 6
 #define YAW_ABOVE 90
 #define YAW_BELOW 270
-#define YAW_LEFT 0
-#define YAW_RIGHT 180
+#define YAW_RIGHT 0
+#define YAW_LEFT 180
 
 class Robot
 {

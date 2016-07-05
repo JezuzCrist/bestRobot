@@ -70,7 +70,9 @@ void Robot::_stop(){
 	this->_setSpeed(0,0);
 }
 void Robot::_moveForward(float speed){
+	cout << "_moveForward"<<endl;
 	this->_setSpeed(speed,0);
+	this->_updatePosition();
 }
 void Robot::_spin(float angularSpeed){
 	this->_setSpeed(0,angularSpeed);
@@ -90,18 +92,19 @@ void Robot::_updatePosition(){
 
 	this->_position->yaw = PlayerCc::rtod(this->_playerPsition->GetYaw());
 	if(this->_position->yaw < 0){
-		cout<<"before"<<this->_position->yaw<<endl;
-		cout<<"*-1  "<<this->_position->yaw*-1<<endl;
-		this->_position->yaw = this->_position->yaw*-1 + 180.0;
+		this->_position->yaw = this->_position->yaw + 360.0;
 	}
 	cout << "robot Pos : x:" << this->_position->x<<", y "<<this->_position->y<<",x yaw "<<this->_position->yaw<<endl;
 
 }
 void Robot::_setYawToTarget(WorldPosition3D* wantedPosition){
-	bool targetAbove = wantedPosition->y > this->_position->y,
-		targetBelow = wantedPosition->y < this->_position->y,
-		targetRight = wantedPosition->x > this->_position->x,
-		targetLeft = wantedPosition->x < this->_position->x;
+	bool targetAbove = wantedPosition->y < this->_position->y;
+	bool targetBelow = wantedPosition->y > this->_position->y;
+	bool targetRight = wantedPosition->x > this->_position->x;
+	bool targetLeft = wantedPosition->x < this->_position->x;
+
+	cout << endl << "wanted Pos X:" << wantedPosition->x << "Y:" << wantedPosition->y << endl;
+	cout << endl << "robot Pos X:" << this->_position->x << "Y:" << this->_position->y << endl;
 
 	if(!targetLeft && !targetRight){
 		if(targetAbove)
@@ -115,38 +118,41 @@ void Robot::_setYawToTarget(WorldPosition3D* wantedPosition){
 		else { wantedPosition->yaw = YAW_RIGHT; }
 	}
 
-	double 	deltaX = this->_position->x - wantedPosition->x,
-			deltaY = this->_position->y - wantedPosition->y;
-
+	double 	deltaX = abs(this->_position->x - wantedPosition->x),
+			deltaY = abs(this->_position->y - wantedPosition->y);
+	cout << "deltax"<< deltaX <<" deltaY" << deltaY <<endl;
 	double hypotinus = distanceBetweenPositions(this->_position, wantedPosition);
+	cout << "hypotinus" << hypotinus << endl;
 	if( targetAbove && targetRight ){
-		double angle = asin(deltaY/hypotinus);
-		wantedPosition->yaw = angle + YAW_ABOVE + (90 - angle);
-	}
-	if( targetAbove && targetLeft ){
-		double angle = asin(deltaY/hypotinus);
+		double angle = PlayerCc::rtod(asin(deltaY/hypotinus));
 		wantedPosition->yaw = angle;
 	}
-	if( targetBelow && targetRight ){
-		double angle = asin(deltaX/hypotinus);
-		wantedPosition->yaw = angle + YAW_RIGHT + (90 - angle);
+	if( targetAbove && targetLeft ){
+		double angle = PlayerCc::rtod(asin(deltaY/hypotinus));
+		cout << " aboveLEft"<<angle <<endl;
+		wantedPosition->yaw = YAW_ABOVE + (90 - angle);
 	}
-	if( targetBelow && targetLeft ){
-		double angle = asin(deltaX/hypotinus);
+	if( targetBelow && targetRight ){
+		double angle = PlayerCc::rtod(asin(deltaX/hypotinus));
 		wantedPosition->yaw = angle + YAW_BELOW;
 	}
+	if( targetBelow && targetLeft ){
+		double angle = PlayerCc::rtod(asin(deltaX/hypotinus));
+		wantedPosition->yaw = YAW_LEFT + (90 - angle);
+	}
 	cout << "wantedYaw" << wantedPosition->yaw <<endl;
+	cout << "TA"<< targetAbove << "  TB" << targetBelow << "  TR" << targetRight << "  TL" << targetLeft << endl;
+	sleep(2);
 	this->_setYaw(wantedPosition);
 }
 
 void Robot::goTo(WorldPosition3D* wantedPosition){
 	cout << "start goto"<<endl;
+	this->_setYawToTarget(wantedPosition);
 	while(this->_isRobotTolaratedAtLocation(this->_position,wantedPosition) == false)
 	{
 		cout << "while goto wanted:x:"<<wantedPosition->x<<"y:"<<wantedPosition->y<<endl;
 		// move robot to location
-
-		this->_setYawToTarget(wantedPosition);
 		this->_moveForward(this->forwardSpeed);
 		this->_updatePosition();
 	}
