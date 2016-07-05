@@ -23,3 +23,9 @@ WorldPosition3D* PositionConveter::getWorldPosition3D(WorldPosition2D* worldPosi
 	worldPosition3D = new WorldPosition3D(*worldPosition, yaw);
 	return worldPosition3D;
 }
+
+PositionConveter::PositionConveter(ConfigurationManager* paramsParser)
+{
+	this -> resolutionRelation = (int)(paramsParser->gridResolutionInCm /
+									   paramsParser->mapResolutionInCm);
+}
