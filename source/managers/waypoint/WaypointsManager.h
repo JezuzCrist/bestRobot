@@ -11,7 +11,7 @@ public:
 	WaypointsManager(vector<MapPosition2D*> robotPath);
 	~WaypointsManager(void);
 
-	void update(MapPosition2D* currentPosition);
+	void nextWaypoint();
 	bool isRobotInEndGoal();
 	MapPosition2D* getActiveWaypoint();
 

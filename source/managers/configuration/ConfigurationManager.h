@@ -1,3 +1,5 @@
+#ifndef CONFIGMANAGER_H_
+#define CONFIGMANAGER_H_
 #include "../../common/Position.h"
 #include "fstream"
 #include "sstream"
@@ -29,4 +31,4 @@ public:
 	double mapResolutionInCm;
 	double gridResolutionInCm;
 };
-
+#endif /* CONFIGMANAGER_H_ */

@@ -20,12 +20,9 @@ bool WaypointsManager::_isRobotInWayPoint(MapPosition2D* currentPosition)
 	return isOnWayPoint;
 }
 
-void WaypointsManager::update(MapPosition2D* currentRobotPos)
+void WaypointsManager::nextWaypoint()
 {
-	if (this->_isRobotInWayPoint(currentRobotPos))
-	{
-		this->_setNextWayPoint();
-	}
+	this->_setNextWayPoint();
 }
 
 void WaypointsManager::_buildWayPoints()
