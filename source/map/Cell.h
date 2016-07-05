@@ -50,7 +50,7 @@ public:
 	bool isOpened();
 	bool isClosed();
 	bool operator==(const Cell& rhs) const;
-public:
+
 	int x,y,f,g,h;
 	Cell* parent;
 	bool closed, opened, walkable;

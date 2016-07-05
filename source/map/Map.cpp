@@ -64,7 +64,8 @@ void Map::readImageToGrid()
 			{
 				isWalkable = true;
 			}
-			this->map[mapRow][mapCol] = new Cell(mapRow, mapCol, isWalkable);
+			cout << "mapRow " << mapRow << " mapCol " << mapCol <<endl;
+			this->map[mapRow][mapCol] = new Cell(mapCol, mapRow, isWalkable);
 		}
 	}
 }
@@ -105,8 +106,8 @@ bool Map::isObstacleFound(int imgRow,
 		for (int j = imgCol; j < horizontalRadius; j++)
 		{
 			if (this->image[i * imgSize->width * 4 + j * 4 + 0] != WHITE ||
-					this->image[i * imgSize->width * 4 + j * 4 + 1] != WHITE ||
-					this->image[i * imgSize->width * 4 + j * 4 + 2] != WHITE)
+				this->image[i * imgSize->width * 4 + j * 4 + 1] != WHITE ||
+				this->image[i * imgSize->width * 4 + j * 4 + 2] != WHITE)
 			{
 				return true;
 			}
@@ -131,4 +132,24 @@ int Map::min(int num, int num1)
 		return num;
 	}
 	return num1;
+}
+
+vector<unsigned char> Map::getImage()
+{
+	return this->image;
+}
+
+ImageSize* Map::getImgSize()
+{
+	return this->imgSize;
+}
+
+Cell*** Map::getMap()
+{
+	return this->map;
+}
+
+ImageSize* Map::getMapSize()
+{
+	return this->mapSize;
 }

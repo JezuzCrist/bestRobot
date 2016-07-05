@@ -85,12 +85,8 @@ void Robot::_setYaw(WorldPosition3D* wantedPosition){
 void Robot::_updatePosition(){
 	this->_playerClient->Read();
 
-
-
 	this->_position->x = this->_playerPsition->GetXPos()*100/this->mapResolutionCm;
 	this->_position->y = this->_playerPsition->GetYPos()*-100/this->mapResolutionCm;
-
-
 
 	this->_position->yaw = PlayerCc::rtod(this->_playerPsition->GetYaw());
 	if(this->_position->yaw < 0){

@@ -7,7 +7,7 @@ PathPlanner::PathPlanner(Map* worldMap)
 
 Cell* PathPlanner::getCellFromMap(int x, int y)
 {
-	return this->_map->map[(int)x][(int)y];
+	return this->_map->map[y][x];
 }
 
 bool PathPlanner::cellIsWalkable(Cell *cell)

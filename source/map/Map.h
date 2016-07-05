@@ -23,6 +23,10 @@ public:
 	Map(string& mapImageFilePath,
 		float mapResolution, float gridResolution, RobotSize* robotSize);
 	~Map();
+	vector<unsigned char> getImage();
+	ImageSize* getImgSize();
+	Cell*** getMap();
+	ImageSize* getMapSize();
 	void loadFromFile(string& mapImageFilePath);
 	void readImageToGrid();
 	void blowObstaclesInImage();
