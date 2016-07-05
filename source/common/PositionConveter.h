@@ -15,12 +15,7 @@ private:
 	int resolutionRelation;
 
 public:
-	static PositionConveter* instance;
 	PositionConveter(ConfigurationManager* paramsParser);
-
-	void createInstance(ConfigurationManager* paramsParser);
-
-	static PositionConveter* getInstance();
 
 	WorldPosition2D* getWorldPosition2D(MapPosition2D* mapPosition);
 	MapPosition2D* getMapPosition2D(WorldPosition2D* worldPosition);

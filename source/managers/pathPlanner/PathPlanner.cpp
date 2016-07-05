@@ -105,6 +105,10 @@ void PathPlanner::setOpen(list<Cell*>& openList, Cell& cellToOpen)
 vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPosition2D destPoint)
 {
     // Define cells to work with
+	cout << sourcePoint.x << endl;
+	cout << sourcePoint.y << endl;
+	cout << destPoint.x << endl;
+	cout << destPoint.y << endl;
 	Cell *start = getCellFromMap(sourcePoint.x, sourcePoint.y);
     Cell *end = getCellFromMap(destPoint.x, destPoint.y);
 	start->g = 0;

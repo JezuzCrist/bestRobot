@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Robot::Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int height)
+Robot::Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int height, double mapResolutionCm)
 {
 	this->_playerClient = new PlayerCc::PlayerClient(ip,port);
 	this->_playerPsition = new PlayerCc::Position2dProxy(this->_playerClient);
@@ -13,8 +13,12 @@ Robot::Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int 
 
 	this->_height = height;
 	this->_width = width;
+	this->mapResolutionCm = mapResolutionCm;
 
-
+	for(int i = 0; i < 15; i++)
+	{
+		_playerClient->Read();
+	}
 
 	this->_playerPsition->SetOdometry(
 		startingPosition->x,startingPosition->y,startingPosition->yaw);
@@ -78,9 +82,16 @@ void Robot::_setYaw(WorldPosition3D* wantedPosition){
 }
 void Robot::_updatePosition(){
 	this->_playerClient->Read();
-	this->_position->x = this->_playerPsition->GetXPos();
-	this->_position->y = this->_playerPsition->GetYPos();
-	this->_position->yaw = this->_playerPsition->GetYaw();
+	this->_position->x = this->_playerPsition->GetXPos()*(100/this->mapResolutionCm);
+	this->_position->y = this->_playerPsition->GetYPos()*(100/this->mapResolutionCm);
+	this->_position->yaw = PlayerCc::rtod(this->_playerPsition->GetYaw());
+	if(this->_position->yaw < 0){
+		cout<<"before"<<this->_position->yaw<<endl;
+		cout<<"*-1  "<<this->_position->yaw*-1<<endl;
+		this->_position->yaw = this->_position->yaw*-1 + 180.0;
+	}
+	cout << "robot Pos : x:" << this->_position->x<<", y "<<this->_position->y<<",x yaw "<<this->_position->yaw<<endl;
+
 }
 void Robot::_setYawToTarget(WorldPosition3D* wantedPosition){
 	bool targetAbove = wantedPosition->y > this->_position->y,
@@ -120,12 +131,17 @@ void Robot::_setYawToTarget(WorldPosition3D* wantedPosition){
 		double angle = asin(deltaX/hypotinus);
 		wantedPosition->yaw = angle + YAW_BELOW;
 	}
+	cout << "wantedYaw" << wantedPosition->yaw <<endl;
 	this->_setYaw(wantedPosition);
 }
 
 void Robot::goTo(WorldPosition3D* wantedPosition){
-	while(this->_isRobotTolaratedAtLocation(this->_position,wantedPosition) == false){
+	cout << "start goto"<<endl;
+	while(this->_isRobotTolaratedAtLocation(this->_position,wantedPosition) == false)
+	{
+		cout << "while goto wanted:x:"<<wantedPosition->x<<"y:"<<wantedPosition->y<<endl;
 		// move robot to location
+
 		this->_setYawToTarget(wantedPosition);
 		this->_moveForward(this->forwardSpeed);
 		this->_updatePosition();

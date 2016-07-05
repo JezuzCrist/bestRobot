@@ -23,6 +23,8 @@ int main()
 	ConfigurationManager configs = ConfigurationManager();
 	cout << "Cpnfig Created"<< endl;
 	configs.parse("parameters.txt");
+	PositionConveter* _positionConverter = new PositionConveter(&configs);
+	cout << "PositionConveter Created" << endl;
 	cout << "Config Loaded"<< endl;
 	cout << configs.mapFileLocation << endl;
 	Map* map = new Map(configs.mapFileLocation,
@@ -31,31 +33,29 @@ int main()
 					   configs.robotSize);
 	cout << "Map Created"<< endl;
 	PathPlanner* pathPlanner = new PathPlanner(map);
-	MapPosition2D goal, startPosition;
-
-	// change to real start and goal
-	goal.x = 20;
-	goal.y = 0;
-	startPosition.x = 0;
-	startPosition.y = 0;
-
+	WorldPosition3D startPosition = configs.startPosition;
+	int resolutionRelation = (int)(configs.gridResolutionInCm /
+								   configs.mapResolutionInCm);
+	MapPosition2D* mapStartPosition = new MapPosition2D(configs.startPosition.x / resolutionRelation,
+													    configs.startPosition.y / resolutionRelation);
+	MapPosition2D* mapGoalPosition = _positionConverter->getMapPosition2D(&(configs.goal));
+	cout << "convert positions"<<endl;
 	//convert the positions to CELL   worldPO -> MAp pos
-	vector<MapPosition2D*> pathToGoal = pathPlanner->getPath(startPosition,goal);
+	vector<MapPosition2D*> pathToGoal = pathPlanner->getPath(*mapStartPosition, *mapGoalPosition);
 	cout << "path created" << endl;
 	// create waypoint manager
 	WaypointsManager* waypoints = new WaypointsManager(pathToGoal);
 	cout << "WapointManager Created" << endl;
-	PositionConveter* _positionConverter = new PositionConveter(&configs);
-	cout << "PositionConveter Created" << endl;
 
 	Robot* robot = new Robot("localhost",6665,&(configs.startPosition),
-			configs.robotSize->width,configs.robotSize->height);
+			configs.robotSize->width,configs.robotSize->height, configs.mapResolutionInCm);
 	cout << "Robot Created" << endl;
-	while(waypoints->isRobotInEndGoal()){
+	while(!waypoints->isRobotInEndGoal()){
 		MapPosition2D* currentWaypoint = waypoints->getActiveWaypoint();
 
 		robot->goTo( _positionConverter->getWorldPosition3D(currentWaypoint) );
 		waypoints->nextWaypoint();
 	}
+	cout << "Done waypoints: " << endl;
 	return 0;
 }

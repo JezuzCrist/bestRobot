@@ -13,7 +13,7 @@
 class Robot
 {
 public:
-	Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int height);
+	Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int height, double mapResolutionCm);
 	~Robot(void);
 	WorldPosition3D* getPosition();
 	float getLaserDistance(int laserIndex);
@@ -25,11 +25,12 @@ private:
 	const double static angleTolerance = 3;
 	const double static distanceTolerance = 5;
 
-	const float static forwardSpeed = 1;
-	const float static angularSpeed = 1;
+	const float static forwardSpeed = 0.5;
+	const float static angularSpeed = 0.5;
 
 	WorldPosition3D* _position;
 	int _width,_height;
+	double mapResolutionCm;
 	PlayerCc::PlayerClient* _playerClient;
 	PlayerCc::Position2dProxy* _playerPsition;
 	PlayerCc::LaserProxy* _lasers;
@@ -43,6 +44,6 @@ private:
 	bool _isAngleTolarated(WorldPosition3D* robot, WorldPosition3D* wanted);
 	bool _isDistanceTolarated(WorldPosition3D* robot, WorldPosition3D* wanted);
 	bool _isRobotTolaratedAtLocation(WorldPosition3D* robot, WorldPosition3D* wanted);
-	
+
 	void _setYawToTarget(WorldPosition3D* wantedPosition);
 };
