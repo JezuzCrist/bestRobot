@@ -21,7 +21,9 @@ Robot::Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int 
 	}
 
 	this->_playerPsition->SetOdometry(
-		startingPosition->x,startingPosition->y,startingPosition->yaw);
+		startingPosition->x*this->mapResolutionCm/100,
+		startingPosition->y*this->mapResolutionCm/-100,
+		PlayerCc::dtor(startingPosition->yaw));
 	this->_playerPsition->SetMotorEnable(true);
 
 }
@@ -82,8 +84,14 @@ void Robot::_setYaw(WorldPosition3D* wantedPosition){
 }
 void Robot::_updatePosition(){
 	this->_playerClient->Read();
-	this->_position->x = this->_playerPsition->GetXPos()*(100/this->mapResolutionCm);
-	this->_position->y = this->_playerPsition->GetYPos()*(100/this->mapResolutionCm);
+
+
+
+	this->_position->x = this->_playerPsition->GetXPos()*100/this->mapResolutionCm;
+	this->_position->y = this->_playerPsition->GetYPos()*-100/this->mapResolutionCm;
+
+
+
 	this->_position->yaw = PlayerCc::rtod(this->_playerPsition->GetYaw());
 	if(this->_position->yaw < 0){
 		cout<<"before"<<this->_position->yaw<<endl;
