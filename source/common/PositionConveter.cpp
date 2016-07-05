@@ -24,6 +24,12 @@ WorldPosition3D* PositionConveter::getWorldPosition3D(WorldPosition2D* worldPosi
 	return worldPosition3D;
 }
 
+WorldPosition3D* PositionConveter::getWorldPosition3DFrom2DMap(MapPosition2D* mapPosition)
+{
+	WorldPosition2D* map2DinWorld = this->getWorldPosition2D(mapPosition);
+	return this->getWorldPosition3D(map2DinWorld);
+}
+
 PositionConveter::PositionConveter(ConfigurationManager* paramsParser)
 {
 	this -> resolutionRelation = (int)(paramsParser->gridResolutionInCm /
