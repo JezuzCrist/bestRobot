@@ -52,8 +52,11 @@ int main()
 	cout << "Robot Created" << endl;
 	while(!waypoints->isRobotInEndGoal()){
 		MapPosition2D* currentWaypoint = waypoints->getActiveWaypoint();
-
-		robot->goTo( _positionConverter->getWorldPosition3D(currentWaypoint) );
+		cout<<"next waypoint x:"<< currentWaypoint->x<< "  y:"<< currentWaypoint->y<<endl;
+		WorldPosition3D* convertedPos = _positionConverter->getWorldPosition3DFrom2DMap(currentWaypoint);
+		cout<<"converted waypoint x:"<< convertedPos->x<< "  y:"<< convertedPos->y<<endl;
+		sleep(10);
+		robot->goTo( convertedPos );
 		waypoints->nextWaypoint();
 	}
 	cout << "Done waypoints: " << endl;
