@@ -14,7 +14,7 @@ public:
 	void nextWaypoint();
 	bool isRobotInEndGoal();
 	MapPosition2D* getActiveWaypoint();
-
+	vector<MapPosition2D*> getWaypoints();
 private:
 	const int static distanceThreshold = 10;
 	const int static numberOfCellsToSkipInPath = 2;
