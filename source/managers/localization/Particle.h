@@ -9,8 +9,6 @@
 
 using namespace std;
 
-#define LOCATION_RANDOMNESS 10
-
 #define MAX_PROB_DISTANCE 2
 #define MAX_PROB_YAW 150
 #define MAX_OBS_DISTANCE 5
@@ -21,24 +19,24 @@ class Particle
 public:
 	Particle(void);
 	Particle(double x, double y, double yaw);
-	Particle(Particle* mutateFromThisPartical);
+	Particle(Particle* mutateFromThisPartical,int LOCATION_RANDOMNESS);
 	~Particle(void);
 
 	void update(double changeX, double changeY, double changeYaw, Robot* robot);
 	void move(double changeX, double changeY, double changeYaw);
-	void mutateFromRefrance(Particle* partical);
+	void mutateFromRefrance(Particle* partical,int LOCATION_RANDOMNESS);
 	double probMov(double deltaX, double deltaY, double deltaTeta);
 
 	double getBelief();
-	MapPosition3D getPosition();
+	WorldPosition3D* getPosition();
 
 private:
 	double _belief,acurecyPrediction;
-	MapPosition3D position;
+	WorldPosition3D* position;
 
 
-	void _cloneFrom(MapPosition3D position);
-	void _randomizeLocation();
+	void _cloneFrom(WorldPosition3D* position);
+	void _randomizeLocation(int LOCATION_RANDOMNESS);
 	double _getParticleObservationsProbablity(Robot* robot);
 	void _updateLocationEstimation();
 };

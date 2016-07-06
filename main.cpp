@@ -5,6 +5,7 @@
 #include "source/robot/Robot.h"
 #include "source/common/PositionConveter.h"
 #include "source/logicVisualization/logicVisualization.h"
+#include "source/managers/localization/LocalizationManager.h"
 
 int main()
 {
@@ -37,12 +38,23 @@ int main()
 	WaypointsManager* waypoints = new WaypointsManager(pathToGoal);
 	cout << "WapointManager Created" << endl;
 
-	logicVisualization* logic = new logicVisualization();
-	logic->printToPicture(pathToGoal, map, &configs, waypoints->getWaypoints());
+
+	LocalizationManager localizationManager(startPosition);
+	cout << "LocalizationManager Created" << endl;
+
+
+	logicVisualization* logic = new logicVisualization(&localizationManager,pathToGoal, map, &configs, waypoints->getWaypoints());
+	logic->printToPicture();
 
 	Robot* robot = new Robot("localhost",6665,&(configs.startPosition),
 			configs.robotSize->width,configs.robotSize->height, configs.mapResolutionInCm);
 	cout << "Robot Created" << endl;
+
+
+
+
+
+
 	while(!waypoints->isRobotInEndGoal()){
 		MapPosition2D* currentWaypoint = waypoints->getActiveWaypoint();
 		cout<<" ======================== next waypoint x:"<< currentWaypoint->x<< "  y:"<< currentWaypoint->y<<endl;

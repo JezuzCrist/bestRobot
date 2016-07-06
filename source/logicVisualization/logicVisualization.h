@@ -4,13 +4,17 @@
 #include "../common/Position.h"
 #include "../common/PositionConveter.h"
 #include "../map/Map.h"
+#include "../managers/localization/LocalizationManager.h"
+#include "../managers/localization/Particle.h"
 
 
 class logicVisualization {
 public:
-	logicVisualization();
-	void printToPicture(vector<MapPosition2D*> pathToGoal, Map* map,
-			            ConfigurationManager* configurationManager,vector<MapPosition2D*> waypoints);
+	logicVisualization(LocalizationManager* _localizationManager,
+			vector<MapPosition2D*> pathToGoal, Map* map,
+		            ConfigurationManager* configurationManager,
+		             vector<MapPosition2D*> waypoints);
+	void printToPicture();
 	virtual ~logicVisualization();
 
 private:
@@ -20,6 +24,12 @@ private:
 			vector<unsigned char>* image,ImageSize* imgSize);
 	void _printWayPoints(PositionConveter* positionConverter,vector<MapPosition2D*> waypoints,
 			vector<unsigned char>* image,ImageSize* imgSize);
+	void particals( vector<unsigned char>* image,ImageSize* imgSize);
+	LocalizationManager* _localizationManager;
+	vector<MapPosition2D*> _pathToGoal;
+	Map* _map;
+    ConfigurationManager* _configurationManager;
+	vector<MapPosition2D*> _waypoints;
 
 };
 

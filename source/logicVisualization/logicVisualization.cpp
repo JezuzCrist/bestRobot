@@ -1,31 +1,34 @@
 #include "logicVisualization.h"
 using namespace std;
 
-logicVisualization::logicVisualization(){
+logicVisualization::logicVisualization(LocalizationManager* localizationManager,
+		vector<MapPosition2D*> pathToGoal, Map* map,
+		            ConfigurationManager* configurationManager,
+		             vector<MapPosition2D*> waypoints){
+
+	this->_map = map;
+	this->_configurationManager = configurationManager;
+	this->_waypoints = waypoints;
+	this->_pathToGoal = pathToGoal;
+	this->_localizationManager = localizationManager;
 
 }
 
-void logicVisualization::printToPicture(vector<MapPosition2D*> pathToGoal, Map* map,
-		            ConfigurationManager* configurationManager,
-		             vector<MapPosition2D*> waypoints)
+void logicVisualization::printToPicture()
 {
-	PositionConveter* positionConverter = new PositionConveter(configurationManager);
-	ImageSize* imgSize = map->getImgSize();
-	vector<unsigned char> image = map->getBlownImage();
+	PositionConveter* positionConverter = new PositionConveter(this->_configurationManager);
+	ImageSize* imgSize = this->_map->getImgSize();
+	vector<unsigned char> image = this->_map->getBlownImage();
 
-	this->_printObsticalsAndMap(positionConverter,map,&image,imgSize);
+	this->_printObsticalsAndMap(positionConverter,this->_map,&image,imgSize);
 
-	this->_printPath(positionConverter,pathToGoal,&image,imgSize);
+	this->_printPath(positionConverter,this->_pathToGoal,&image,imgSize);
 
-	this->_printWayPoints(positionConverter,waypoints,&image,imgSize);
+	this->_printWayPoints(positionConverter,this->_waypoints,&image,imgSize);
+	this->particals(&image,imgSize);
 
 	unsigned height = (unsigned)imgSize->height, width = (unsigned)imgSize->width;
 	encodeOneStep("output/logic.png", image, width, height);
-}
-
-
-logicVisualization::~logicVisualization() {
-	// TODO Auto-generated destructor stub
 }
 
 void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConverter,
@@ -35,12 +38,12 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 
 	Cell*** grid = map->getMap();
 	ImageSize* mapSize = map->getMapSize();
-	
+
 	for (int row = 0; row < imgSize->height; ++row)
 	{
 		for (int col = 0; col < imgSize->width; ++col)
 		{
-			// cout << (int)(*image)[row * imgSize->width * 4 + col * 4] << " " 
+			// cout << (int)(*image)[row * imgSize->width * 4 + col * 4] << " "
 			// << ((int)(*image)[row * imgSize->width * 4 + col * 4 + 0] == 255) << endl;
 			if((int)(*image)[row * imgSize->width * 4 + col * 4 + 0] == 255){
 				(*image)[row * imgSize->width * 4 + col * 4 + 0] = 67;
@@ -81,7 +84,7 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 80;
 				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 80;
 			}
-			
+
 		}
 	}
 };
@@ -128,3 +131,23 @@ void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vec
 	}
 
 };
+
+logicVisualization::~logicVisualization() {
+	// TODO Auto-generated destructor stub
+}
+
+void logicVisualization::particals( vector<unsigned char>* image,ImageSize* imgSize) {
+	vector<Particle*> particalsToDraw = this->_localizationManager->getParticals();
+
+	vector<Particle*>::iterator i;
+	for (i = particalsToDraw.begin(); i != particalsToDraw.end(); ++ i)
+	{
+		cout<<"DRAWINF PARTICAL"<<endl;
+		Particle* partical = (*i);
+		int imgRow = partical->getPosition()->y;
+		int imgCol = partical->getPosition()->x;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+	}
+}

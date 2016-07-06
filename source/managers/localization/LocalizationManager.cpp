@@ -1,49 +1,55 @@
 #include "LocalizationManager.h"
 
 
-LocalizationManager::LocalizationManager(void)
+LocalizationManager::LocalizationManager(WorldPosition3D startingPoint)
 {
-	this->_init();
+	cout<<"ctor LocalizationManager"<<endl;
+	this->_init(startingPoint);
 }
 
-void LocalizationManager::_init()
+void LocalizationManager::_init(WorldPosition3D startingPoint)
 {
-	double startingLocationX = 0, startingLocationY = 0,startingYaw = 0, ANGLES_NUM = 360;
-	Particle* startingLocation = new Particle(startingLocationX,startingLocationY,startingYaw);
-
-	for (int i = 0; i < PARTICLE_COUNT; i++)
+	this->_particles.resize(this->ParticalCount);
+	Particle* startingLocation = new Particle(startingPoint.x,startingPoint.y,startingPoint.yaw);
+//	cout<<"1"<<endl;
+	for (int newParticalIndex = 0; newParticalIndex < this->ParticalCount; newParticalIndex++)
 	{
-		for (int newParticalIndex = 0; i < PARTICLE_COUNT; newParticalIndex++)
-		{
-			this->_particles[i] = new Particle(startingLocation);
-		}
+		this->_particles[newParticalIndex] = new Particle(startingLocation,this->ParticalFirstSpread);
+//		cout<< "NUM:" << newParticalIndex << " X:" << this->_particles[newParticalIndex]->getPosition()->x<<
+//		"   Y:" << this->_particles[newParticalIndex]->getPosition()->y <<endl;
 	}
+//	cout<<"4"<<endl;
 }
+LocalizationManager::~LocalizationManager(void)
+{
+}
+vector<Particle*> LocalizationManager::getParticals(){
+	return this->_particles;
+}
+
+
 bool isParticalBelifeHigher(Particle* p1, Particle* p2){
 	return (p1->getBelief() < p2->getBelief());
 }
 void LocalizationManager::_sortParticalsByBelife(){
-	sort(this->_particles, this->_particles + PARTICLE_COUNT,isParticalBelifeHigher);
+	//sort(this->_particles, this->_particles + this->ParticalCount,isParticalBelifeHigher);
 }
 Particle* LocalizationManager::_getBestParticle(){
-	return this->_particles[PARTICLE_COUNT - 1];
+	return this->_particles[this->ParticalCount - 1];
 }
 void LocalizationManager::update(double changeX, double changeY, double changeYaw, Robot* robot){
 	// update the particals
-	for(int particalIndex = 0; particalIndex < PARTICLE_COUNT; particalIndex++){
+	for(int particalIndex = 0; particalIndex < this->ParticalCount; particalIndex++){
 		//this->_particles[particalIndex]->update(changeX,changeY,changeYaw,robot);
 	}
 
 	//sort the particals
 	this->_sortParticalsByBelife();
 
-	for (int newParticalIndex = 0; newParticalIndex < PARTICLE_KILL; ++newParticalIndex)
+	for (int newParticalIndex = 0; newParticalIndex < this->ParticalsToRenew; ++newParticalIndex)
 	{
-		this->_particles[newParticalIndex]->mutateFromRefrance(this->_getBestParticle());
+		this->_particles[newParticalIndex]->mutateFromRefrance(this->_getBestParticle(),this->ParticalSpread);
 	}
 
 
-}
-LocalizationManager::~LocalizationManager(void)
-{
 }

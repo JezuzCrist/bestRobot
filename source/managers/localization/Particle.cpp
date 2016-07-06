@@ -7,38 +7,42 @@ void _initRandom(){
 
 Particle::Particle(void)
 {
+	this->position = new WorldPosition3D();
 }
 Particle::Particle(double x, double y, double yaw)
 {
-	this->position.x = x;
-	this->position.y = y;
-	this->position.yaw = yaw;
+	this->position = new WorldPosition3D();
+	this->position->x = x;
+	this->position->y = y;
+	this->position->yaw = yaw;
 }
-Particle::Particle(Particle* mutateFromThisPartical)
+Particle::Particle(Particle* mutateFromThisPartical,int LOCATION_RANDOMNESS)
 {
-	this->mutateFromRefrance(mutateFromThisPartical);
+	this->position = new WorldPosition3D();
+	this->mutateFromRefrance(mutateFromThisPartical,LOCATION_RANDOMNESS);
 }
 
 double Particle::getBelief(){	return this->_belief;	}
-MapPosition3D Particle::getPosition(){	return this->position;	}
+WorldPosition3D* Particle::getPosition(){	return this->position;	}
 
 
 void Particle::move(double changeX, double changeY, double changeYaw)
 {
-	this->position.x += changeX;
-	this->position.y += changeY;
-	this->position.yaw += changeYaw;
+	this->position->x += changeX;
+	this->position->y += changeY;
+	this->position->yaw += changeYaw;
 }
-void Particle::_cloneFrom(MapPosition3D clonePosition){
-	this->position.x = clonePosition.x;
-	this->position.y = clonePosition.y;
-	this->position.yaw = clonePosition.yaw;
+void Particle::_cloneFrom(WorldPosition3D* clonePosition){
+	this->position->x = clonePosition->x;
+	this->position->y = clonePosition->y;
+	this->position->yaw = clonePosition->yaw;
 }
-void Particle::_randomizeLocation(){
-	_initRandom();
-	this->position.x = std::max(0.0, this->position.x + (rand() % LOCATION_RANDOMNESS));
-	this->position.y = std::max(0.0, this->position.y + (rand() % LOCATION_RANDOMNESS));
-	this->position.yaw = std::max(0.0, this->position.yaw + (rand() % LOCATION_RANDOMNESS));
+void Particle::_randomizeLocation(int LOCATION_RANDOMNESS){
+	//_initRandom();
+//	cout << "RANDOME:" << (rand() % LOCATION_RANDOMNESS) << "  " << (rand() % LOCATION_RANDOMNESS) << endl;
+	this->position->x = std::max(0.0, this->position->x + (rand() % LOCATION_RANDOMNESS) - LOCATION_RANDOMNESS/2 );
+	this->position->y = std::max(0.0, this->position->y + (rand() % LOCATION_RANDOMNESS) - LOCATION_RANDOMNESS/2 );
+	this->position->yaw = std::max(0.0, this->position->yaw + (rand() % LOCATION_RANDOMNESS));
 }
 double Particle::_getParticleObservationsProbablity(Robot* robot){
 	unsigned hits = 0, misses = 0;
@@ -76,9 +80,9 @@ void Particle::_updateLocationEstimation(){
 	//this->_belief = this->_getParticleObservationsProbablity() * this->_belief * this->getProgressProbability();
 }
 
-void Particle::mutateFromRefrance(Particle* partical){
+void Particle::mutateFromRefrance(Particle* partical,int LOCATION_RANDOMNESS){
 	this->_cloneFrom(partical->getPosition());
-	this->_randomizeLocation();
+	this->_randomizeLocation(LOCATION_RANDOMNESS);
 	this->_updateLocationEstimation();
 }
 
