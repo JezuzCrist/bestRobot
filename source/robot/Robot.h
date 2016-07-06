@@ -23,9 +23,9 @@ public:
 
 private:
 	const double static angleTolerance = 3;
-	const double static distanceTolerance = 5;
+	const double static distanceTolerance = 2;
 
-	const float static forwardSpeed = 0.5;
+	const float static forwardSpeed = 0.2;
 	const float static angularSpeed = 0.5;
 
 	WorldPosition3D* _position;
