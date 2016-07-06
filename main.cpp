@@ -39,14 +39,15 @@ int main()
 	WaypointsManager* waypoints = new WaypointsManager(pathToGoal);
 	cout << "WapointManager Created" << endl;
 
-	LocalizationManager localizationManager(startPosition);
-	cout << "LocalizationManager Created" << endl;
 
 	Robot* robot = new Robot("localhost",6665,&(configs.startPosition),
 			configs.robotSize->width,configs.robotSize->height, configs.mapResolutionInCm);
 	cout << "Robot Created" << endl;
 
-	logicVisualization* logic = new logicVisualization(&localizationManager,pathToGoal, map,
+	LocalizationManager* localizationManager = new LocalizationManager(startPosition,robot,map);
+	cout << "LocalizationManager Created" << endl;
+
+	logicVisualization* logic = new logicVisualization(localizationManager,pathToGoal, map,
 												       &configs, waypoints->getWaypoints(),
 												       robot);
 	logic->printToPicture();
