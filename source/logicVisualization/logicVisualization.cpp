@@ -35,6 +35,24 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 
 	Cell*** grid = map->getMap();
 	ImageSize* mapSize = map->getMapSize();
+	
+	for (int row = 0; row < imgSize->height; ++row)
+	{
+		for (int col = 0; col < imgSize->width; ++col)
+		{
+			// cout << (int)(*image)[row * imgSize->width * 4 + col * 4] << " " 
+			// << ((int)(*image)[row * imgSize->width * 4 + col * 4 + 0] == 255) << endl;
+			if((int)(*image)[row * imgSize->width * 4 + col * 4 + 0] == 255){
+				(*image)[row * imgSize->width * 4 + col * 4 + 0] = 67;
+				(*image)[row * imgSize->width * 4 + col * 4 + 1] = 67;
+				(*image)[row * imgSize->width * 4 + col * 4 + 2] = 67;
+			} else {
+				(*image)[row * imgSize->width * 4 + col * 4 + 0] = 72;
+				(*image)[row * imgSize->width * 4 + col * 4 + 1] = 72;
+				(*image)[row * imgSize->width * 4 + col * 4 + 2] = 72;
+			}
+		}
+	}
 
 	for (int row=0; row < mapSize->height; row++)
 	{
@@ -42,26 +60,28 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 		{
 			int x = grid[row][col]->x;
 			int y = grid[row][col]->y;
-			cout << "row " << row << " col " << col << endl;
-			cout << "X: " << x << " Y: " <<y<< endl;
+			// cout << "row " << row << " col " << col << endl;
+			// cout << "X: " << x << " Y: " <<y<< endl;
 			MapPosition2D* mapPosition = new MapPosition2D(x, y);
-			cout << "before "<< mapPosition->y <<endl;
+			// cout << "before "<< mapPosition->y <<endl;
 			worldPosition = positionConverter->getWorldPosition2D(mapPosition);
-			cout << "after "<< worldPosition->y <<endl;
+			// cout << "after "<< worldPosition->y <<endl;
 			int imgRow = worldPosition->y;
 			int imgCol = worldPosition->x;
 			int color;
 			if (grid[row][col]->walkable)
 			{
-				color = 255;
+				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 67;
+				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 67;
+				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 67;
 			}
 			else
 			{
-				color = 0;
+				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 80;
+				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 80;
+				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 80;
 			}
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+			
 		}
 	}
 };
@@ -75,9 +95,9 @@ void logicVisualization::_printPath(PositionConveter* positionConverter,vector<M
 	 	worldPosition = positionConverter->getWorldPosition2D((*i));
 	 	int imgRow = worldPosition->y;
 	 	int imgCol = worldPosition->x;
-	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
-	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 0;
-	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 0;
+	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 70;
+	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 174;
+	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 50;
 	 }
 };
 void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vector<MapPosition2D*> waypoints,
@@ -90,9 +110,21 @@ void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vec
 		worldPosition = positionConverter->getWorldPosition2D((*i));
 		int imgRow = worldPosition->y;
 		int imgCol = worldPosition->x;
-		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
-		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
-		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 0;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 88;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 207;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 64;
+
+		(*image)[imgRow * imgSize->width * 4 + (imgCol+1) * 4 + 0] = 88;
+		(*image)[imgRow * imgSize->width * 4 + (imgCol+1) * 4 + 1] = 207;
+		(*image)[imgRow * imgSize->width * 4 + (imgCol+1) * 4 + 2] = 64;
+
+		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol) * 4 + 0] = 88;
+		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol) * 4 + 1] = 207;
+		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol) * 4 + 2] = 64;
+
+		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol+1) * 4 + 0] = 88;
+		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol+1) * 4 + 1] = 207;
+		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol+1) * 4 + 2] = 64;
 	}
 
 };
