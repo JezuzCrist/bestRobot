@@ -16,6 +16,7 @@ int main()
 	cout << "PositionConveter Created" << endl;
 	cout << "Config Loaded"<< endl;
 	cout << configs.mapFileLocation << endl;
+	cout << "fdsa" << configs.mapResolutionInCm << endl;
 	Map* map = new Map(configs.mapFileLocation,
 					   configs.mapResolutionInCm,
 					   configs.gridResolutionInCm,

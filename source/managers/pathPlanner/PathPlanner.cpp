@@ -7,18 +7,14 @@ PathPlanner::PathPlanner(Map* worldMap)
 
 Cell* PathPlanner::getCellFromMap(int x, int y)
 {
-	return this->_map->map[y][x];
+	Cell*** blurryMap = this->_map->getBlurryMap();
+	return blurryMap[y][x];
 }
 
 bool PathPlanner::cellIsWalkable(Cell *cell)
 {
 	// obstacle case
-	for (int i = -1; i < 2; ++i)
-		for (int j = -1; j < 2; ++j)
-			if (this->_map -> inBound(cell->getX() + i, cell->getY() + j) &&
-				!getCellFromMap(cell->getX() + i, cell->getY() + j)-> walkable)
-				return false;
-	return true;
+	return getCellFromMap(cell->getX(), cell->getY())-> walkable;
 }
 
 list<Cell*> PathPlanner::getNeighbors(Cell *current)
@@ -117,7 +113,7 @@ vector<MapPosition2D*> PathPlanner::getPath(MapPosition2D sourcePoint, MapPositi
     Cell *neighbor;
 
 	if (!start->walkable || !end->walkable)
-		throw "The cell (start or end) is not walkable " + end->walkable;
+		throw "The cell (start or end) is not walkable ";
 
     // Define the open and the close list
     list<Cell*> openList;

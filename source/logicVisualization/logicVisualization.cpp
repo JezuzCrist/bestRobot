@@ -87,7 +87,8 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 
 		}
 	}
-};
+}
+
 void logicVisualization::_printPath(PositionConveter* positionConverter,vector<MapPosition2D*> pathToGoal,
 		vector<unsigned char>* image,ImageSize* imgSize){
 
@@ -102,7 +103,8 @@ void logicVisualization::_printPath(PositionConveter* positionConverter,vector<M
 	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 174;
 	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 50;
 	 }
-};
+}
+
 void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vector<MapPosition2D*> waypoints,
 		vector<unsigned char>* image,ImageSize* imgSize){
 
@@ -129,8 +131,7 @@ void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vec
 		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol+1) * 4 + 1] = 207;
 		(*image)[(imgRow+1) * imgSize->width * 4 + (imgCol+1) * 4 + 2] = 64;
 	}
-
-};
+}
 
 logicVisualization::~logicVisualization() {
 	// TODO Auto-generated destructor stub
