@@ -79,7 +79,7 @@ void printToPicture(vector<MapPosition2D*> pathToGoal, Map* map,
 								   configurationManager->mapResolutionInCm);
 
 	ImageSize* imgSize = map->getImgSize();
-	vector<unsigned char> image = map->getImage();
+	vector<unsigned char> image = map->getBlownImage();
 	Cell*** grid = map->getMap();
 	ImageSize* mapSize = map->getMapSize();
 

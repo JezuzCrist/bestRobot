@@ -20,18 +20,20 @@ public:
 class Map
 {
 public:
-	Map(string& mapImageFilePath,
-		float mapResolution, float gridResolution, RobotSize* robotSize);
+	Map(string& mapImageFilePath, float mapResolution,
+		float gridResolution, RobotSize* robotSize);
 	~Map();
-	vector<unsigned char> getImage();
+	vector<unsigned char> getBlownImage();
 	ImageSize* getImgSize();
 	Cell*** getMap();
 	ImageSize* getMapSize();
 	void loadFromFile(string& mapImageFilePath);
 	void readImageToGrid();
 	void blowObstaclesInImage();
+	void drawBlowedObstacle(ImageSize* radiusToDraw, int imgRow, int imgCol);
 	bool inBound(int x, int y);
-	int min(int num, int num1);
+	int min(int num1, int num2);
+	int max(int num1, int num2);
 	bool isObstacleFound(int imgRow, int imgCol, ImageSize* gridChunk);
 
 	Cell*** map;
@@ -40,7 +42,8 @@ private:
 	float mapResolution, robotSizeInCells, gridResolution;
 	RobotSize* robotSize;
 	unsigned width, height;
-	vector<unsigned char> image;
+	vector<unsigned char> originalImage;
+	vector<unsigned char> blownImage;
 	ImageSize* imgSize;
 	ImageSize* mapSize;
 };

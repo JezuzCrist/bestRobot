@@ -22,9 +22,11 @@ Map::~Map()
 
 void Map::loadFromFile(string& mapImageFilePath)
 {
-	// Read image and save image size to member;
+	// Read original image and save image size to member;
 	unsigned height, width;
-	lodepng::decode(this->image, width, height, mapImageFilePath);
+	lodepng::decode(this->originalImage, width, height, mapImageFilePath);
+	vector<unsigned char> copiedImage(this->originalImage);
+	this->blownImage = copiedImage;
 	cout << width << endl;
 	this->imgSize = new ImageSize(width, height);
 
@@ -58,7 +60,7 @@ void Map::readImageToGrid()
 		{
 			mapRow = imgRow / resolutionRelation;
 			mapCol = imgCol / resolutionRelation;
-			color = this->image[imgRow * imgSize->width * 4 + imgCol * 4];
+			color = this->blownImage[imgRow * imgSize->width * 4 + imgCol * 4];
 			bool isWalkable = false;
 			if (color == WHITE)
 			{
@@ -76,8 +78,8 @@ void Map::blowObstaclesInImage()
 	bool isBlack;
 	unsigned int color;
 	ImageSize* radiusToSearchObstacle = new ImageSize(
-						(int)(robotSize->width / 2.0 / this->mapResolution),
-						(int)(robotSize->height / 2.0 / this->mapResolution));
+						(int)(robotSize->width / this->mapResolution),
+						(int)(robotSize->height / this->mapResolution));
 
 	for (int imgRow = 0; imgRow < imgSize->height; imgRow++)
 	{
@@ -86,28 +88,30 @@ void Map::blowObstaclesInImage()
 			isBlack = isObstacleFound(imgRow, imgCol,
 									  radiusToSearchObstacle);
 			color = (isBlack == true) ? BLACK : WHITE;
-			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
-			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = color;
-			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = color;
-			this->image[imgRow * imgSize->width * 4 + imgCol * 4 + 3] = 255;
+			this->blownImage[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
+			this->blownImage[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = color;
+			this->blownImage[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = color;
+			this->blownImage[imgRow * imgSize->width * 4 + imgCol * 4 + 3] = 255;
 		}
 	}
 }
 
-bool Map::isObstacleFound(int imgRow,
-						  int imgCol, ImageSize* radiusToSearchObstacle)
+bool Map::isObstacleFound(int imgRow, int imgCol,
+		                  ImageSize* radiusToSearchObstacle)
 {
-	int verticalRadius = min(imgRow + radiusToSearchObstacle->height,
+	int verticalRadius = min(imgRow + radiusToSearchObstacle->height / 2,
 							 imgSize->height);
-	int horizontalRadius = min(imgCol + radiusToSearchObstacle->width,
+	int horizontalRadius = min(imgCol + radiusToSearchObstacle->width / 2,
 							   imgSize->width);
-	for (int i = imgRow; i < verticalRadius; i++)
+	int startRowToSearch = max(radiusToSearchObstacle->height / 2 * -1 + imgRow, 0);
+	int startColToSearch = max(radiusToSearchObstacle->width / 2 * -1 + imgCol, 0);
+	for (int i = startRowToSearch; i < verticalRadius; i++)
 	{
-		for (int j = imgCol; j < horizontalRadius; j++)
+		for (int j = startColToSearch; j < horizontalRadius; j++)
 		{
-			if (this->image[i * imgSize->width * 4 + j * 4 + 0] != WHITE ||
-				this->image[i * imgSize->width * 4 + j * 4 + 1] != WHITE ||
-				this->image[i * imgSize->width * 4 + j * 4 + 2] != WHITE)
+			if (this->originalImage[i * imgSize->width * 4 + j * 4 + 0] != WHITE ||
+				this->originalImage[i * imgSize->width * 4 + j * 4 + 1] != WHITE ||
+				this->originalImage[i * imgSize->width * 4 + j * 4 + 2] != WHITE)
 			{
 				return true;
 			}
@@ -125,18 +129,19 @@ bool Map::inBound(int x, int y)
 }
 
 
-int Map::min(int num, int num1)
+int Map::min(int num1, int num2)
 {
-	if (num < num1)
-	{
-		return num;
-	}
-	return num1;
+	return num1 < num2 ? num1 : num2;
 }
 
-vector<unsigned char> Map::getImage()
+int Map::max(int num1, int num2)
 {
-	return this->image;
+	return num1 < num2 ? num2 : num1;
+}
+
+vector<unsigned char> Map::getBlownImage()
+{
+	return this->blownImage;
 }
 
 ImageSize* Map::getImgSize()
