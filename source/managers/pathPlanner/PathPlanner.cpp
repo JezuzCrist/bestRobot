@@ -75,7 +75,7 @@ vector<MapPosition2D*> PathPlanner::reconstruct_path(Cell *start, Cell *end)
         path.push_back(current->getPosition());
         current = current->getParent();
     }
-
+	std::reverse(path.begin(),path.end());
 	return path;
 }
 
