@@ -251,3 +251,14 @@ Cell*** Map::getBlurryMap()
 {
 	return blurryMap;
 }
+
+bool Map::hasObstacle(WorldPosition2D* worldPosition)
+{
+	int imgCol = worldPosition->x;
+	int imgRow = worldPosition->y;
+	bool isObstacle = (this->originalImage[imgRow * imgSize->width * 4 + imgCol * 4 + 0] == WHITE &&
+					   this->originalImage[imgRow * imgSize->width * 4 + imgCol * 4 + 1] == WHITE &&
+					   this->originalImage[imgRow * imgSize->width * 4 + imgCol * 4 + 2] == WHITE);
+
+	return isObstacle;
+}

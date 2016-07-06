@@ -38,7 +38,8 @@ public:
 	int max(int num1, int num2);
 	bool isObstacleFound(int imgRow, int imgCol, ImageSize* gridChunk);
 	void printObsticalsAndMap(PositionConveter* positionConverter,
-	 Map* map, ImageSize* imgSize);
+							  Map* map, ImageSize* imgSize);
+	bool hasObstacle(WorldPosition2D* worldPosition);
 
 	Cell*** map;
 	Cell*** blurryMap;
