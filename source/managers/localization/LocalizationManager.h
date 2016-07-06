@@ -2,6 +2,8 @@
 #include "Particle.h"
 #include "../../common/Position.h"
 #include "../../common/PositionConveter.h"
+#include "../../map/Map.h"
+#include "../../robot/Robot.h"
 #include <vector>
 
 #define PARTICLE_COUNT 200
@@ -11,7 +13,7 @@ using namespace std;
 class LocalizationManager
 {
 public:
-	LocalizationManager(WorldPosition3D startingPoint);
+	LocalizationManager(WorldPosition3D startingPoint,Robot* robot,Map* map);
 	~LocalizationManager(void);
 	void update(double changeX, double changeY, double changeYaw, Robot* robot);
 	MapPosition3D getEstimatedPosition();
@@ -23,7 +25,8 @@ private:
 	const static int ParticalFirstSpread = 130;
 	const static int ParticalsToRenew = 20;
 
-
+	Map* _map;
+	Robot* _robot;
 	vector<Particle*> _particles;
 	Particle _bestEstimatedPartical;
 	void _init(WorldPosition3D startingPoint);

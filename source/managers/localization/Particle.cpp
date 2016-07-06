@@ -8,18 +8,21 @@ void _initRandom(){
 Particle::Particle(void)
 {
 	this->position = new WorldPosition3D();
+	this->_belief = 0;
 }
 Particle::Particle(double x, double y, double yaw)
 {
 	this->position = new WorldPosition3D();
+	this->_belief = 0;
 	this->position->x = x;
 	this->position->y = y;
 	this->position->yaw = yaw;
 }
-Particle::Particle(Particle* mutateFromThisPartical,int LOCATION_RANDOMNESS)
+Particle::Particle(Particle* mutateFromThisPartical,int LOCATION_RANDOMNESS,Robot* robot,Map* map)
 {
 	this->position = new WorldPosition3D();
-	this->mutateFromRefrance(mutateFromThisPartical,LOCATION_RANDOMNESS);
+	this->_belief = 0;
+	this->mutateFromRefrance(mutateFromThisPartical,LOCATION_RANDOMNESS,robot,map);
 }
 
 double Particle::getBelief(){	return this->_belief;	}
@@ -44,22 +47,30 @@ void Particle::_randomizeLocation(int LOCATION_RANDOMNESS){
 	this->position->y = std::max(0.0, this->position->y + (rand() % LOCATION_RANDOMNESS) - LOCATION_RANDOMNESS/2 );
 	this->position->yaw = std::max(0.0, this->position->yaw + (rand() % LOCATION_RANDOMNESS));
 }
-double Particle::_getParticleObservationsProbablity(Robot* robot){
+double Particle::_getParticleObservationsProbablity(Robot* robot, Map* map){
 	unsigned hits = 0, misses = 0;
+	// double angleBetweenLasers = 20;
+	//(0.36)*i - 120
 
-	for(int laserIndex = 0 ; laserIndex < NUMBER_OF_LASERS; laserIndex++){
-		double distanceFromObsticel = 0;// = robot->getLaserDistance(i);
-		double currentAngle = 0; //((i * (0.36) - 120.0) / 180.0) * M_PI;
-		double yawInRad = 0; //= _yaw/180.0 * M_PI;
+	for(int laserIndex = 0 ; laserIndex < MAX_LASER_ANGEL; laserIndex+= SKIP_LASER_ANGLE){
+		double laserValue = robot->getLaserDistance(laserIndex);
+		cout<< "laserIndex" << laserIndex << "   laserValue = " << laserValue << endl;
+		double laserAngel = laserIndex * LASER_SENSOR_SEPERATION - LASER_SENSOR_CENTER;
+		double currentAngle = robot->getPosition()->yaw; //((i * (0.36) - 120.0) / 180.0) * M_PI;
+		// double yawInRad = PlayerCc::dtor(currentAngle); //= _yaw/180.0 * M_PI;
 
 		// Calculating diffrence in location from obstacle
-		double xOffset = distanceFromObsticel * cos(yawInRad + currentAngle);
-		double yOffset = distanceFromObsticel * sin(yawInRad + currentAngle);
+		double distanceFromObsticel = std::min(MIN_OBSTICAL_DISTANCE, laserValue);
+		double xOffset = distanceFromObsticel * cos(laserAngel + currentAngle);
+		double yOffset = distanceFromObsticel * sin(laserAngel + currentAngle);
 
-		// Setting the free spaces in the map
+		bool isThereAnObstical = (distanceFromObsticel < MIN_OBSTICAL_DISTANCE);// see if there is an obstical at sensores estimated location
 
-		bool isThereAnObstical = true;// see if there is an obstical at sensores estimated location
-		bool obsticalPrediction = true;// get obsticals from memory map at location
+		WorldPosition2D* predictedObstical = new WorldPosition2D(this->position->x + xOffset, this->position->y + yOffset);
+		cout << "xOffset " <<  predictedObstical->x << "  yOffset"<< predictedObstical->y << endl;
+		bool obsticalPrediction = map->hasObstacle(predictedObstical) ;// get obsticals from memory map at location
+		//map->get
+
 
 		bool miss = (isThereAnObstical != obsticalPrediction);
 		bool hit = (isThereAnObstical == obsticalPrediction);
@@ -76,16 +87,24 @@ double Particle::_getParticleObservationsProbablity(Robot* robot){
 	double probabiltyEstimation = hits/(hits+misses);
 	return probabiltyEstimation;
 }
-void Particle::_updateLocationEstimation(){
-	//this->_belief = this->_getParticleObservationsProbablity() * this->_belief * this->getProgressProbability();
+void Particle::_updateLocationEstimation(Robot* robot,Map* map){
+	// this->_belief = this->_getParticleObservationsProbablity() * this->_belief * this->getProgressProbability();
+	//  2*PAST_BELIFE/3 + NewBelife/3 = belife
+	this->_belief = (this->_getParticleObservationsProbablity(robot,map))/3 + 2*(this->_belief)/3;
+	cout << "BELIEF === WHAT(" << this->_belief << ")"<< endl;
 }
 
-void Particle::mutateFromRefrance(Particle* partical,int LOCATION_RANDOMNESS){
+void Particle::mutateFromRefrance(Particle* partical,int LOCATION_RANDOMNESS,Robot* robot,Map* map){
 	this->_cloneFrom(partical->getPosition());
 	this->_randomizeLocation(LOCATION_RANDOMNESS);
-	this->_updateLocationEstimation();
+	this->_updateLocationEstimation(robot,map);
 }
 
+void Particle::update(double deltaX, double deltaY, double deltaYaw, Robot* robot,Map* map)
+{
+	this->move(deltaX,deltaY,deltaYaw);
+	this->_updateLocationEstimation(robot,map);
+}
 //
 //void Particle::UpdateParticle(double deltaX, double deltaY, double deltaYaw, Robot* robot)
 //{
