@@ -27,6 +27,9 @@ Robot::Robot(char* ip, int port,WorldPosition3D* startingPosition,int width,int 
 	this->_playerPsition->SetMotorEnable(true);
 
 }
+double Robot::getMapResolution(){
+	return this->mapResolutionCm;
+}
 int Robot::getWidth(){
 	return this->_width;
 }

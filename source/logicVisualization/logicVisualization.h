@@ -31,6 +31,7 @@ private:
 	void _printWayPoints(PositionConveter* positionConverter,vector<MapPosition2D*> waypoints,
 			vector<unsigned char>* image,ImageSize* imgSize);
 	void particals( vector<unsigned char>* image,ImageSize* imgSize);
+	void drawRobot(vector<unsigned char>* image, ImageSize* imgSize);
 	LocalizationManager* _localizationManager;
 	vector<MapPosition2D*> _pathToGoal;
 	Map* _map;

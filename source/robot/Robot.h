@@ -19,6 +19,7 @@ public:
 	float getLaserDistance(int laserIndex);
 	int getWidth();
 	int getHeight();
+	double getMapResolution();
 	void goTo(WorldPosition3D* wantedPosition);
 
 private:

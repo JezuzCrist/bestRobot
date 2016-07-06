@@ -28,7 +28,7 @@ void logicVisualization::printToPicture()
 
 	this->_printWayPoints(positionConverter,this->_waypoints,&image,imgSize);
 
-	// this->particals(&image,imgSize);
+	this->drawRobot(&image, imgSize);
 
 	unsigned height = (unsigned)imgSize->height, width = (unsigned)imgSize->width;
 	encodeOneStep("output/logic.png", image, width, height);
@@ -153,6 +153,28 @@ void logicVisualization::particals( vector<unsigned char>* image,ImageSize* imgS
 		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
 		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
 		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+	}
+}
+
+void logicVisualization::drawRobot(vector<unsigned char>* image, ImageSize* imgSize)
+{
+	int robotRadius = robot->getWidth() / robot->getMapResolution() / 2;
+	WorldPosition3D* robotPos = this->robot->getPosition();
+
+	int startRow = std::max(robotRadius* - 1 + (int)robotPos->y, 0);
+	int startCol = std::max(robotRadius* - 1 + (int)robotPos->x, 0);
+	int endRow = std::min(robotRadius + (int)robotPos->y, imgSize->height);
+	int endCol = std::min(robotRadius + (int)robotPos->x, imgSize->width);
+
+	for (int imgRow = startRow; imgRow < endRow; imgRow++)
+	{
+		for (int imgCol = startCol; imgCol < endCol; imgCol++)
+		{
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 0;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 0;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+		}
 	}
 }
 
