@@ -50,6 +50,10 @@ MapPosition2D* WaypointsManager::getActiveWaypoint()
 	return (this->_wayPoints[this->wayPointIndex]);
 }
 
+vector<MapPosition2D*> WaypointsManager::getWaypoints(){
+	return this->_wayPoints;
+}
+
 WaypointsManager::~WaypointsManager(void)
 {
 }
