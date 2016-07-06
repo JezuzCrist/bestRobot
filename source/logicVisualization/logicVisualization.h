@@ -11,7 +11,7 @@
 #include <sstream>
 #include "../robot/Robot.h"
 
-#define robotPositionsFileName "robot_positions.json"
+#define robotPositionsFileName "output/robot_positions.json"
 
 class logicVisualization {
 public:

@@ -1,0 +1,25 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	background-color: #434343;
+}
+h1{
+    font-family: monospace;
+    /*margin-right: auto;
+    margin-left: auto;*/
+        font-size: 4em;
+    position: absolute;
+    left: 5%;
+    color: #434941;
+    bottom: 0%;
+}
+.imageContainer{
+	width: 65%;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+.imageContainer img{
+	width:100%;
+}
