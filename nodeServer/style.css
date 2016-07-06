@@ -23,3 +23,9 @@ h1{
 .imageContainer img{
 	width:100%;
 }
+
+#robotLocation{
+    color: rgba(235, 212, 88, 0.75);
+    position: absolute;
+    bottom: 0;
+}

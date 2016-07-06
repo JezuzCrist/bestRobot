@@ -28,4 +28,4 @@ var refreshData = function () {
 	refreshText();
 }
 
-setInterval(refreshData,1000);
+setInterval(refreshData,200);
