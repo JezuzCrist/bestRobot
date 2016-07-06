@@ -39,28 +39,24 @@ int main()
 	WaypointsManager* waypoints = new WaypointsManager(pathToGoal);
 	cout << "WapointManager Created" << endl;
 
-
 	LocalizationManager localizationManager(startPosition);
 	cout << "LocalizationManager Created" << endl;
-
-
-	logicVisualization* logic = new logicVisualization(&localizationManager,pathToGoal, map, &configs, waypoints->getWaypoints());
-	logic->printToPicture();
 
 	Robot* robot = new Robot("localhost",6665,&(configs.startPosition),
 			configs.robotSize->width,configs.robotSize->height, configs.mapResolutionInCm);
 	cout << "Robot Created" << endl;
 
-
-
-
-
+	logicVisualization* logic = new logicVisualization(&localizationManager,pathToGoal, map,
+												       &configs, waypoints->getWaypoints(),
+												       robot);
+	logic->printToPicture();
 
 	while(!waypoints->isRobotInEndGoal()){
 		MapPosition2D* currentWaypoint = waypoints->getActiveWaypoint();
 		cout<<" ======================== next waypoint x:"<< currentWaypoint->x<< "  y:"<< currentWaypoint->y<<endl;
 		WorldPosition3D* convertedPos = _positionConverter->getWorldPosition3DFrom2DMap(currentWaypoint);
 		cout<<"converted waypoint x:"<< convertedPos->x<< "  y:"<< convertedPos->y<<endl;
+		logic->writeRobotPosition();
 		sleep(0.5);
 		robot->goTo( convertedPos );
 		waypoints->nextWaypoint();

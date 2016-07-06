@@ -6,15 +6,20 @@
 #include "../map/Map.h"
 #include "../managers/localization/LocalizationManager.h"
 #include "../managers/localization/Particle.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
+#define robotPositionsFileName "robot_positions.json"
 
 class logicVisualization {
 public:
 	logicVisualization(LocalizationManager* _localizationManager,
 			vector<MapPosition2D*> pathToGoal, Map* map,
 		            ConfigurationManager* configurationManager,
-		             vector<MapPosition2D*> waypoints);
+		             vector<MapPosition2D*> waypoints, Robot* robot);
 	void printToPicture();
+	void writeRobotPosition();
 	virtual ~logicVisualization();
 
 private:
@@ -30,7 +35,8 @@ private:
 	Map* _map;
     ConfigurationManager* _configurationManager;
 	vector<MapPosition2D*> _waypoints;
-
+	ofstream robotPositionFile;
+	Robot* robot;
 };
 
 #endif /* LOGICVISUALIZATION_H_ */

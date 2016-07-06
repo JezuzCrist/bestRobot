@@ -2,16 +2,19 @@
 using namespace std;
 
 logicVisualization::logicVisualization(LocalizationManager* localizationManager,
-		vector<MapPosition2D*> pathToGoal, Map* map,
+					vector<MapPosition2D*> pathToGoal, Map* map,
 		            ConfigurationManager* configurationManager,
-		             vector<MapPosition2D*> waypoints){
+		             vector<MapPosition2D*> waypoints,
+		             Robot* robot)
+{
 
 	this->_map = map;
 	this->_configurationManager = configurationManager;
 	this->_waypoints = waypoints;
 	this->_pathToGoal = pathToGoal;
 	this->_localizationManager = localizationManager;
-
+	this->robotPositionFile.open(robotPositionsFileName);
+	this->robot = robot;
 }
 
 void logicVisualization::printToPicture()
@@ -134,7 +137,7 @@ void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vec
 }
 
 logicVisualization::~logicVisualization() {
-	// TODO Auto-generated destructor stub
+	this->robotPositionFile.close();
 }
 
 void logicVisualization::particals( vector<unsigned char>* image,ImageSize* imgSize) {
@@ -151,4 +154,13 @@ void logicVisualization::particals( vector<unsigned char>* image,ImageSize* imgS
 		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
 		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
 	}
+}
+
+void logicVisualization::writeRobotPosition()
+{
+	stringstream posInJson;
+	posInJson << "{'pos': 'x: " << this->robot->getPosition()->x << ", " <<
+						  "y: " << this->robot->getPosition()->y <<", " <<
+						  "yaw: " << this->robot->getPosition()->yaw << "'},\n";
+	robotPositionFile << posInJson.str();
 }
