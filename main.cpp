@@ -58,6 +58,7 @@ int main()
 		WorldPosition3D* convertedPos = _positionConverter->getWorldPosition3DFrom2DMap(currentWaypoint);
 		cout<<"converted waypoint x:"<< convertedPos->x<< "  y:"<< convertedPos->y<<endl;
 		logic->writeRobotPosition();
+		logic->printToPicture();
 		sleep(0.5);
 		robot->goTo( convertedPos );
 		waypoints->nextWaypoint();

@@ -1,6 +1,7 @@
 Debug/
 output/
 ReadMe.txt
+nodeServer/node_modules/
 
 # Eclipse Core
 .project
