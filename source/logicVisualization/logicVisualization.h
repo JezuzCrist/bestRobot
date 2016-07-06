@@ -6,6 +6,7 @@
 #include "../map/Map.h"
 #include "../managers/localization/LocalizationManager.h"
 #include "../managers/localization/Particle.h"
+#include "../robot/Robot.h"
 
 
 class logicVisualization {
@@ -13,7 +14,8 @@ public:
 	logicVisualization(LocalizationManager* _localizationManager,
 			vector<MapPosition2D*> pathToGoal, Map* map,
 		            ConfigurationManager* configurationManager,
-		             vector<MapPosition2D*> waypoints);
+		             vector<MapPosition2D*> waypoints,
+		             Robot* robot);
 	void printToPicture();
 	virtual ~logicVisualization();
 
@@ -30,6 +32,7 @@ private:
 	Map* _map;
     ConfigurationManager* _configurationManager;
 	vector<MapPosition2D*> _waypoints;
+	Robot* _robot;
 
 };
 

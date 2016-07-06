@@ -4,13 +4,15 @@ using namespace std;
 logicVisualization::logicVisualization(LocalizationManager* localizationManager,
 		vector<MapPosition2D*> pathToGoal, Map* map,
 		            ConfigurationManager* configurationManager,
-		             vector<MapPosition2D*> waypoints){
+		             vector<MapPosition2D*> waypoints,
+		             Robot* robot){
 
 	this->_map = map;
 	this->_configurationManager = configurationManager;
 	this->_waypoints = waypoints;
 	this->_pathToGoal = pathToGoal;
 	this->_localizationManager = localizationManager;
+	this->_robot = robot;
 
 }
 
@@ -25,7 +27,8 @@ void logicVisualization::printToPicture()
 	this->_printPath(positionConverter,this->_pathToGoal,&image,imgSize);
 
 	this->_printWayPoints(positionConverter,this->_waypoints,&image,imgSize);
-	this->particals(&image,imgSize);
+
+	// this->particals(&image,imgSize);
 
 	unsigned height = (unsigned)imgSize->height, width = (unsigned)imgSize->width;
 	encodeOneStep("output/logic.png", image, width, height);
@@ -143,7 +146,7 @@ void logicVisualization::particals( vector<unsigned char>* image,ImageSize* imgS
 	vector<Particle*>::iterator i;
 	for (i = particalsToDraw.begin(); i != particalsToDraw.end(); ++ i)
 	{
-		cout<<"DRAWINF PARTICAL"<<endl;
+		// cout<<"DRAWINF PARTICAL"<<endl;
 		Particle* partical = (*i);
 		int imgRow = partical->getPosition()->y;
 		int imgCol = partical->getPosition()->x;
