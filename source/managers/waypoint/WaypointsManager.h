@@ -17,7 +17,7 @@ public:
 
 private:
 	const int static distanceThreshold = 10;
-	const int static numberOfCellsToSkipInPath = 5;
+	const int static numberOfCellsToSkipInPath = 2;
 
 	vector<MapPosition2D*> _robotPath;
 	vector<MapPosition2D*> _wayPoints;

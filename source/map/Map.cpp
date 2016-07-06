@@ -76,8 +76,8 @@ void Map::blowObstaclesInImage()
 	bool isBlack;
 	unsigned int color;
 	ImageSize* radiusToSearchObstacle = new ImageSize(
-						(int)(robotSize->width / 2.0 / this->mapResolution),
-						(int)(robotSize->height / 2.0 / this->mapResolution));
+						(int)(robotSize->width*3/ this->mapResolution),
+						(int)(robotSize->height*3 / this->mapResolution));
 
 	for (int imgRow = 0; imgRow < imgSize->height; imgRow++)
 	{
