@@ -9,14 +9,30 @@ void logicVisualization::printToPicture(vector<MapPosition2D*> pathToGoal, Map* 
 		            ConfigurationManager* configurationManager,
 		             vector<MapPosition2D*> waypoints)
 {
-	WorldPosition2D* worldPosition;
 	PositionConveter* positionConverter = new PositionConveter(configurationManager);
-
-	int resolutionRelation = (int)(configurationManager->gridResolutionInCm /
-								   configurationManager->mapResolutionInCm);
-
 	ImageSize* imgSize = map->getImgSize();
 	vector<unsigned char> image = map->getImage();
+
+	this->_printObsticalsAndMap(positionConverter,map,&image,imgSize);
+
+	this->_printPath(positionConverter,pathToGoal,&image,imgSize);
+
+	this->_printWayPoints(positionConverter,waypoints,&image,imgSize);
+
+	unsigned height = (unsigned)imgSize->height, width = (unsigned)imgSize->width;
+	encodeOneStep("output/logic.png", image, width, height);
+}
+
+
+logicVisualization::~logicVisualization() {
+	// TODO Auto-generated destructor stub
+}
+
+void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConverter,
+ Map* map, vector<unsigned char>* image,ImageSize* imgSize){
+	WorldPosition2D* worldPosition;
+
+
 	Cell*** grid = map->getMap();
 	ImageSize* mapSize = map->getMapSize();
 
@@ -43,37 +59,40 @@ void logicVisualization::printToPicture(vector<MapPosition2D*> pathToGoal, Map* 
 			{
 				color = 0;
 			}
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
-			image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = color;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
 		}
 	}
-	vector<MapPosition2D*>::iterator i;
-	for (i = pathToGoal.begin(); i != pathToGoal.end(); ++ i)
-	{
-		worldPosition = positionConverter->getWorldPosition2D((*i));
-		int imgRow = worldPosition->y;
-		int imgCol = worldPosition->x;
-		image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
-		image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 0;
-		image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 0;
-	}
+};
+void logicVisualization::_printPath(PositionConveter* positionConverter,vector<MapPosition2D*> pathToGoal,
+		vector<unsigned char>* image,ImageSize* imgSize){
 
-	//vector<MapPosition2D*>::iterator i;
+	WorldPosition2D* worldPosition;
+	vector<MapPosition2D*>::iterator i;
+	 for (i = pathToGoal.begin(); i != pathToGoal.end(); ++ i)
+	 {
+	 	worldPosition = positionConverter->getWorldPosition2D((*i));
+	 	int imgRow = worldPosition->y;
+	 	int imgCol = worldPosition->x;
+	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
+	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 0;
+	 	(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 0;
+	 }
+};
+void logicVisualization::_printWayPoints(PositionConveter* positionConverter,vector<MapPosition2D*> waypoints,
+		vector<unsigned char>* image,ImageSize* imgSize){
+
+	WorldPosition2D* worldPosition;
+	vector<MapPosition2D*>::iterator i;
 	for (i = waypoints.begin(); i != waypoints.end(); ++ i)
 	{
 		worldPosition = positionConverter->getWorldPosition2D((*i));
 		int imgRow = worldPosition->y;
 		int imgCol = worldPosition->x;
-		image[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
-		image[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
-		image[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 0;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 255;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 255;
+		(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 0;
 	}
-	unsigned height = (unsigned)imgSize->height, width = (unsigned)imgSize->width;
-	encodeOneStep("output/logic.png", image, width, height);
-}
 
-
-logicVisualization::~logicVisualization() {
-	// TODO Auto-generated destructor stub
-}
+};
