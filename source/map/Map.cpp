@@ -36,7 +36,6 @@ void Map::loadFromFile(string& mapImageFilePath)
 	this->blownImage = copiedImage;
 	vector<unsigned char> copiedImage1(this->originalImage);
 	this->blurryImage = copiedImage1;
-	cout << "width  "<< width << endl;
 	this->imgSize = new ImageSize(width, height);
 
 	// Calc and save the grid size to member;
