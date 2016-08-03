@@ -46,8 +46,6 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 	{
 		for (int col = 0; col < imgSize->width; ++col)
 		{
-			// cout << (int)(*image)[row * imgSize->width * 4 + col * 4] << " "
-			// << ((int)(*image)[row * imgSize->width * 4 + col * 4 + 0] == 255) << endl;
 			if((int)(*image)[row * imgSize->width * 4 + col * 4 + 0] == 255){
 				(*image)[row * imgSize->width * 4 + col * 4 + 0] = 67;
 				(*image)[row * imgSize->width * 4 + col * 4 + 1] = 67;
@@ -66,15 +64,13 @@ void logicVisualization::_printObsticalsAndMap(PositionConveter* positionConvert
 		{
 			int x = grid[row][col]->x;
 			int y = grid[row][col]->y;
-			// cout << "row " << row << " col " << col << endl;
-			// cout << "X: " << x << " Y: " <<y<< endl;
+
 			MapPosition2D* mapPosition = new MapPosition2D(x, y);
-			// cout << "before "<< mapPosition->y <<endl;
+
 			worldPosition = positionConverter->getWorldPosition2D(mapPosition);
-			// cout << "after "<< worldPosition->y <<endl;
+
 			int imgRow = worldPosition->y;
 			int imgCol = worldPosition->x;
-			int color;
 			if (grid[row][col]->walkable)
 			{
 				(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 67;
@@ -146,7 +142,6 @@ void logicVisualization::particals( vector<unsigned char>* image,ImageSize* imgS
 	vector<Particle*>::iterator i;
 	for (i = particalsToDraw.begin(); i != particalsToDraw.end(); ++ i)
 	{
-		// cout<<"DRAWINF PARTICAL"<<endl;
 		Particle* partical = (*i);
 		int imgRow = partical->getPosition()->y;
 		int imgCol = partical->getPosition()->x;
