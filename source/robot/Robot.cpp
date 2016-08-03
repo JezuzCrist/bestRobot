@@ -73,9 +73,7 @@ void Robot::_stop(){
 	this->_setSpeed(0,0);
 }
 void Robot::_moveForward(float speed){
-	// cout << "_moveForward"<<endl;
 	this->_setSpeed(speed,0);
-	// this->_updatePosition();
 }
 void Robot::_spin(float angularSpeed){
 	this->_setSpeed(0,angularSpeed);
@@ -105,7 +103,6 @@ void Robot::_updatePosition(){
 	if(this->_position->yaw < 0){
 		this->_position->yaw = this->_position->yaw + 360.0;
 	}
-	// cout << "robot Pos : x:" << this->_position->x<<", y "<<this->_position->y<<",x yaw "<<this->_position->yaw<<endl;
 
 }
 void Robot::_setYawToTarget(WorldPosition3D* wantedPosition){
@@ -135,7 +132,6 @@ void Robot::_setYawToTarget(WorldPosition3D* wantedPosition){
 	}
 	if( targetAbove && targetLeft ){
 		double angle = PlayerCc::rtod(asin(deltaY/hypotinus));
-		//cout << " aboveLEft"<<angle <<endl;
 		wantedPosition->yaw = YAW_ABOVE + (90 - angle);
 	}
 	if( targetBelow && targetRight ){

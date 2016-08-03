@@ -81,7 +81,6 @@ Cell*** Map::readImageToGrid(vector<unsigned char> image)
 			{
 				isWalkable = true;
 			}
-			cout << "mapRow " << mapRow << " mapCol " << mapCol <<endl;
 			map[mapRow][mapCol] = new Cell(mapCol, mapRow, isWalkable);
 		}
 	}
