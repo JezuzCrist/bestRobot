@@ -12,7 +12,7 @@ logicVisualization::logicVisualization(LocalizationManager* localizationManager,
 	this->_waypoints = waypoints;
 	this->_pathToGoal = pathToGoal;
 	this->_localizationManager = localizationManager;
-	this->robotPositionFile.open(robotPositionsFileName);
+
 	this->robot = robot;
 }
 
@@ -165,19 +165,20 @@ void logicVisualization::drawRobot(vector<unsigned char>* image, ImageSize* imgS
 	{
 		for (int imgCol = startCol; imgCol < endCol; imgCol++)
 		{
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 0;
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 0;
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
-			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 255;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 0] = 235;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 1] = 212;
+			(*image)[imgRow * imgSize->width * 4 + imgCol * 4 + 2] = 88;
 		}
 	}
 }
 
 void logicVisualization::writeRobotPosition()
 {
+	this->robotPositionFile.open(robotPositionsFileName);
 	stringstream posInJson;
-	posInJson << "{'pos': 'x: " << this->robot->getPosition()->x << ", " <<
+	posInJson << "position: x: " << this->robot->getPosition()->x << ", " <<
 						  "y: " << this->robot->getPosition()->y <<", " <<
-						  "yaw: " << this->robot->getPosition()->yaw << "'},\n";
+						  "yaw: " << this->robot->getPosition()->yaw << "\n";
 	robotPositionFile << posInJson.str();
+	this->robotPositionFile.close();
 }
