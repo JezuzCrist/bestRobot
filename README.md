@@ -1,15 +1,9 @@
 # bestRobot
 omer &amp; nir project
-![Alt Text](http://www.sheawong.com/wp-content/uploads/2013/08/keephatin.gif)
 
 
+to run the server you must have Node.js installed on the machin with NPM 
 
-TODO:
+go to the servers folder and press "run.bat"
 
-- [ ] map
-- [x] pathplanner
-- [x] waypointMannager
-- [ ] Robot
-- [x] ConfigurationManager
-- [ ] LocalizationManager
-  - [ ] Particle
+the server will run at  http://localhost:3000
